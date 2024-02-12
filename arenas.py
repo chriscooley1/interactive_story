@@ -16,3 +16,19 @@ class Arena(ABC):
         print("Players in the arena:")
         for player in self.players:
             print(f"- {player.name}")
+
+class TheBattleArena(Arena):
+    def __init__(self, name, description):
+        super().__init__(name, description)
+
+class ForestArena(Arena):
+    def __init__(self, name, description):
+        super().__init__(name, description)
+
+class DesertArena(Arena):
+    def __init__(self, name, description):
+        super().__init__(name, description)
+
+class IceArena(Arena):
+    def __init__(self, name, description):
+        super().__init__(name, description)
