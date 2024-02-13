@@ -23,20 +23,18 @@ def main():
     player1.weapon = player1_weapon
     player2.weapon = player2_weapon
 
-    # Choose a random arena for each player
+    # Choose a random arena for both players
     arena_classes = [TheBattleArena, ForestArena, DesertArena, IceArena]
-    player1_arena_class = random.choice(arena_classes)
-    player2_arena_class = random.choice(arena_classes)
-    player1_arena = player1_arena_class("Random Arena", "A randomly chosen arena")
-    player2_arena = player2_arena_class("Random Arena", "A randomly chosen arena")
+    chosen_arena_class = random.choice(arena_classes)
+    chosen_arena = chosen_arena_class(chosen_arena_class.__name__, chosen_arena_class.__doc__)
 
-    # Add players to their respective arenas
-    player1_arena.add_player(player1)
-    player2_arena.add_player(player2)
 
-    # Show players in their respective arenas
-    player1_arena.show_players()
-    player2_arena.show_players()
+    # Add players to the same arena
+    chosen_arena.add_player(player1)
+    chosen_arena.add_player(player2)
+
+    # Print out the randomly selected arena for players
+    print(f"{player1.name} and {player2.name} are in {chosen_arena.name}: {chosen_arena.description}")
 
     # Simulate a battle
     while player1.is_alive() and player2.is_alive():
