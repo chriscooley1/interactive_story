@@ -1,6 +1,6 @@
 from players import Player
 from weapons import Weapon
-from arenas import Arena
+from arenas import TheBattleArena, ForestArena, DesertArena, IceArena
 import random
 
 def main():
@@ -13,14 +13,6 @@ def main():
         {"name": "Mace", "damage": 40}
     ]
 
-    #Define a list of available arenas with their name and description
-    available_arenas = [
-        {"name": "The Battle Arena", "description": "A gladiatorial arena where heroes and villains clash."},
-        {"name": "Forest Arena", "description": "A dense forest where fighters battle amidst trees and foliage."},
-        {"name": "Desert Arena", "description": "A scorching desert where combatants face off under the blazing sun."},
-        {"name": "Ice Arena", "description": "A frozen wasteland where warriors duel on slippery ice."}
-    ]
-
     # Create players
     player1 = Player("Hero", 100, 20)
     player2 = Player("Villain", 80, 25)
@@ -31,18 +23,20 @@ def main():
     player1.weapon = player1_weapon
     player2.weapon = player2_weapon
 
+    # Choose a random arena for each player
+    arena_classes = [TheBattleArena, ForestArena, DesertArena, IceArena]
+    player1_arena_class = random.choice(arena_classes)
+    player2_arena_class = random.choice(arena_classes)
+    player1_arena = player1_arena_class("Random Arena", "A randomly chosen arena")
+    player2_arena = player2_arena_class("Random Arena", "A randomly chosen arena")
 
-    player1_arena = Arena(**random.choice(available_arenas))
-    player2_arena = Arena(**random.choice(available_arenas))
-    player1.arena = player1_arena
-    player2.arena = player2_arena
+    # Add players to their respective arenas
+    player1_arena.add_player(player1)
+    player2_arena.add_player(player2)
 
-    # Add players to the arena
-    Arena("", "").add_player(player1)
-    Arena("", "").add_player(player2)
-
-    # Show players in the arena
-    Arena("", "").show_players()
+    # Show players in their respective arenas
+    player1_arena.show_players()
+    player2_arena.show_players()
 
     # Simulate a battle
     while player1.is_alive() and player2.is_alive():
