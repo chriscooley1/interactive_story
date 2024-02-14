@@ -38,11 +38,10 @@ def main():
     chosen_arena.add_player(player1)
     chosen_arena.add_player(player2)
 
-    # Print out the randomly selected arena for players
-    print(f"{player1.name} and {player2.name} are in {chosen_arena.name}: {chosen_arena.description}")
+    # Print out the randomly selected arena and weapon choices for players
+    print(f"{player1.name} ({player1_weapon.name}) and {player2.name} ({player2_weapon.name}) are in {chosen_arena.name}: {chosen_arena.description}")
 
     # Simulate a battle
-    winning_weapon = None
     while player1.is_alive() and player2.is_alive():
         player1.attack(player2)
         if player2.is_alive():
@@ -58,9 +57,12 @@ def main():
 
     # Determine the winner
     if player1.is_alive():
+        winning_weapon = player1.weapon.name
         print(f"{player1.name} wins with {winning_weapon}!")
     else:
+        winning_weapon = player2.weapon.name
         print(f"{player2.name} wins with {winning_weapon}!")
+
 
 if __name__ == "__main__":
     main()
