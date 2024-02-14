@@ -22,46 +22,59 @@ def main():
     ]
 
     # Create players
-    player1 = Player("Hero", 100, 20)
-    player2 = Player("Villain", 80, 25)
+    player_name = input("Enter your character's name: ")
+    player = Player(player_name, 100, 20)
     
-    # Randomly assign weapons to players
-    player1_weapon = random.choice(available_weapons)
-    player2_weapon = random.choice(available_weapons)
-    player1.weapon = player1_weapon
-    player2.weapon = player2_weapon
+    # Randomly assign a weapon to the player
+    player_weapon = random.choice(available_weapons)
+    player.weapon = player_weapon
 
-    # Choose a random arena for both players
+    # Choose a random arena for the player
     chosen_arena = random.choice(available_arenas)
 
-    # Add players to the same arena
-    chosen_arena.add_player(player1)
-    chosen_arena.add_player(player2)
+    # Add the player to the chosen arena
+    chosen_arena.add_player(player)
 
-    # Print out the randomly selected arena and weapon choices for players
-    print(f"{player1.name} ({player1_weapon.name}) and {player2.name} ({player2_weapon.name}) are in {chosen_arena.name}: {chosen_arena.description}")
+    # Print out the selected arena and weapon for the player
+    print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
+    print(f"You are equipped with a {player_weapon.name}.")
+
+    # Simulate the interactive story based on the chosen arena
+    if isinstance(chosen_arena, TheBattleArena):
+        print("As you enter the gladiatorial arena, the crowd roars with excitement. The atmosphere is charged with tension.")
+        # Add more narrative specific to TheBattleArena
+    elif isinstance(chosen_arena, TheForestArena):
+        print("You find yourself in a dense forest, surrounded by towering trees and mysterious sounds. The air is filled with the scent of nature.")
+        # Add more narrative specific to TheForestArena
+    elif isinstance(chosen_arena, TheDesertArena):
+        print("The scorching sun beats down on the endless expanse of the desert. The heat is almost unbearable, and the sand stretches as far as the eye can see.")
+        # Add more narrative specific to TheDesertArena
+    elif isinstance(chosen_arena, TheIceArena):
+        print("You stand on a frozen wasteland, the icy ground beneath your feet. The air is bone-chilling, and the sound of cracking ice echoes in the distance.")
+        # Add more narrative specific to TheIceArena
+
+    # Initialize winning_weapon outside the battle loop
+    winning_weapon = None
 
     # Simulate a battle
-    while player1.is_alive() and player2.is_alive():
-        player1.attack(player2)
-        if player2.is_alive():
-            player2.attack(player1)
+    while player.is_alive():
+        opponent = chosen_arena.get_opponent(player)
+        if opponent is not None:
+            player.attack(opponent)
+            if opponent.is_alive():
+                opponent.attack(player)
+            else:
+                winning_weapon = player.weapon.name
+                break
         else:
-            winning_weapon = player1.weapon.name
-            break
-        if player1.is_alive():
-            player1.attack(player2)
-        else:
-            winning_weapon = player2.weapon.name
+            print("No opponents available in the arena.")
             break
 
     # Determine the winner
-    if player1.is_alive():
-        winning_weapon = player1.weapon.name
-        print(f"{player1.name} wins with {winning_weapon}!")
+    if winning_weapon is not None:
+        print(f"Congratulations, {player.name}! You emerged victorious with {winning_weapon}.")
     else:
-        winning_weapon = player2.weapon.name
-        print(f"{player2.name} wins with {winning_weapon}!")
+        print("Unfortunately, you have been defeated. Better luck next time!")
 
 
 if __name__ == "__main__":

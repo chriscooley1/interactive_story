@@ -1,5 +1,7 @@
 from abc import ABC
 
+import random
+
 class Arena(ABC):
     def __init__(self, name, description):
         self.name = name
@@ -7,15 +9,17 @@ class Arena(ABC):
         self.players = []
 
     def add_player(self, player):
-        self.players.append(player)
+        if len(self.players) < 2:
+            self.players.append(player)
+        else:
+            print("Arena is already full.")
 
-    def remove_player(self, player):
-        self.players.remove(player)
-
-    def show_players(self):
-        print("Players in the arena:")
-        for player in self.players:
-            print(f"- {player.name}")
+    def get_opponent(self, player):
+        opponents = [p for p in self.players if p != player]
+        if opponents:
+            return random.choice(opponents)
+        else:
+            return None
 
 class TheBattleArena(Arena):
     def __init__(self, name, description):
