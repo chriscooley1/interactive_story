@@ -21,14 +21,14 @@ class TheBattleArena(Arena):
     def __init__(self, name, description):
         super().__init__(name, description)
 
-class ForestArena(Arena):
+class TheForestArena(Arena):
     def __init__(self, name, description):
         super().__init__(name, description)
 
-class DesertArena(Arena):
+class TheDesertArena(Arena):
     def __init__(self, name, description):
         super().__init__(name, description)
 
-class IceArena(Arena):
+class TheIceArena(Arena):
     def __init__(self, name, description):
         super().__init__(name, description)
