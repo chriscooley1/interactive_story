@@ -1,4 +1,4 @@
-from players import Player
+from players import Player, Werewolf, Imp, Ogre, Dragon
 from weapons import Sword, Axe, Bow, Dagger, Mace
 from arenas import TheBattleArena, TheForestArena, TheDesertArena, TheIceArena
 import random
@@ -24,6 +24,13 @@ def main():
     # Create players
     player_name = input("Enter your character's name: ")
     player = Player(player_name, 100, 20)
+
+    available_monsters = [
+        Werewolf(player_name, 75, 45),
+        Imp(player_name, 60, 35),
+        Ogre(player_name, 85, 50),
+        Dragon(player_name, 200, 65)
+    ]
     
     # Randomly assign a weapon to the player
     player_weapon = random.choice(available_weapons)
@@ -56,25 +63,45 @@ def main():
     # Initialize winning_weapon outside the battle loop
     winning_weapon = None
 
+    # Initialize damage counters
+    player_damage_taken = 0
+    opponent_damage_taken = 0
+
     # Simulate a battle
     while player.is_alive():
         opponent = chosen_arena.get_opponent(player)
         if opponent is not None:
-            player.attack(opponent)
+            # Player attacks opponent
+            player_attack_damage = player.attack(opponent)
+            print(f"You dealt {player_attack_damage} damage to {opponent.name}!")
+
+            # Check if opponent is still alive
             if opponent.is_alive():
-                opponent.attack(player)
+                # Opponent counterattacks
+                opponent_attack_damage = opponent.attack(player)
+                print(f"{opponent.name} dealt {opponent_attack_damage} damage to you!")
+
+                # Track damage taken by both player and opponent
+                player_damage_taken += opponent_attack_damage
+                opponent_damage_taken += player_attack_damage
+
             else:
                 winning_weapon = player.weapon.name
                 break
+
         else:
-            print("No opponents available in the arena.")
+            winning_weapon = player.weapon.name
             break
 
-    # Determine the winner
+    # Determine the winner and display damage information
     if winning_weapon is not None:
         print(f"Congratulations, {player.name}! You emerged victorious with {winning_weapon}.")
     else:
-        print("Unfortunately, you have been defeated. Better luck next time!")
+        print(f"Unfortunately, you have been defeated. Better luck next time!")
+
+    # Display damage information
+    print(f"Total damage dealt to {player.name}: {player_damage_taken}")
+    print(f"Total damage dealt to {opponent}: {opponent_damage_taken}")
 
 
 if __name__ == "__main__":
