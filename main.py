@@ -46,6 +46,35 @@ def main():
     print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
     print(f"You are equipped with a {player_weapon.name}.")
 
+    # Randomly assign a weapon to the player
+    player_weapon = random.choice(available_weapons)
+    player.weapon = player_weapon
+
+    # Print out the selected arena, weapon, and opponent for the player
+    print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
+    print(f"You are equipped with a {player_weapon.name}.")
+
+    # Randomly choose between a monster or another player as the opponent
+    if random.choice([True, False]):
+        # Randomly choose a monster as the opponent
+        opponent = random.choice(available_monsters)
+    else:
+        # Create a random player as the opponent
+        opponent_names = ["Werewolf", "Imp", "Ogre", "Dragon"]
+        opponent_name = random.choice(opponent_names)
+        opponent = Player(opponent_name, 100, 20)
+
+    # Print out the selected arena, weapon, and opponent for the player
+    print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
+    print(f"You are equipped with a {player_weapon.name}.")
+
+    # Check if opponent is a monster or a player and print their information accordingly
+    if isinstance(opponent, Player):
+        opponent_damage = opponent.attack_power + (opponent.weapon.damage if opponent.weapon else 0)
+        print(f"Your opponent is {opponent.name} with {opponent.health} health and {opponent_damage} damage.")
+    else:
+        print(f"Your opponent is {opponent.name} with {opponent.health} health and {opponent.attack_damage} damage.")
+
     # Simulate the interactive story based on the chosen arena
     if isinstance(chosen_arena, TheBattleArena):
         print("As you enter the gladiatorial arena, the crowd roars with excitement. The atmosphere is charged with tension.")
@@ -68,26 +97,20 @@ def main():
     opponent_damage_taken = 0
 
     # Simulate a battle
-    while player.is_alive():
-        opponent = chosen_arena.get_opponent(player)
-        if opponent is not None:
-            # Player attacks opponent
-            player_attack_damage = player.attack(opponent)
-            print(f"You dealt {player_attack_damage} damage to {opponent.name}!")
+    while player.is_alive() and opponent.is_alive():
+        # Player attacks opponent
+        player_attack_damage = player.attack(opponent)
+        print(f"You dealt {player_attack_damage} damage to {opponent.name}!")
 
-            # Check if opponent is still alive
-            if opponent.is_alive():
-                # Opponent counterattacks
-                opponent_attack_damage = opponent.attack(player)
-                print(f"{opponent.name} dealt {opponent_attack_damage} damage to you!")
+        # Check if opponent is still alive
+        if opponent.is_alive():
+            # Opponent counterattacks
+            opponent_attack_damage = opponent.attack(player)
+            print(f"{opponent.name} dealt {opponent_attack_damage} damage to you!")
 
-                # Track damage taken by both player and opponent
-                player_damage_taken += opponent_attack_damage
-                opponent_damage_taken += player_attack_damage
-
-            else:
-                winning_weapon = player.weapon.name
-                break
+            # Track damage taken by both player and opponent
+            player_damage_taken += opponent_attack_damage
+            opponent_damage_taken += player_attack_damage
 
         else:
             winning_weapon = player.weapon.name
@@ -101,7 +124,7 @@ def main():
 
     # Display damage information
     print(f"Total damage dealt to {player.name}: {player_damage_taken}")
-    print(f"Total damage dealt to {opponent}: {opponent_damage_taken}")
+    print(f"Total damage dealt to {opponent.name}: {opponent_damage_taken}")
 
 
 if __name__ == "__main__":
