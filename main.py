@@ -24,36 +24,46 @@ def main():
     # Create players
     player_name = input("Enter your character's name: ")
     player = Hero(player_name, 100, 25, rapid_assualt)
-    # player = Player(player_name, 100, 20, "Rapid Assault: The player performs a rapid succession of strikes against a single target or multiple nearby enemies, dealing significant damage.")
 
+    # Create available monsters with appropriate names
     available_monsters = [
-        # Werewolf(player_name, 75, 45, "Howl of Despair: The werewolf lets out a terrifying howl that can debuff enemies within a certain radius, reducing their attack power or causing fear, which might make them miss their next attack."),
-        Werewolf(player_name, 75, 45, howl_of_despair),
-        # Orc(player_name, 60, 35, "Bloodlust: With each hit that successfully damages an opponent, the orc gains a small amount of health or a temporary increase in attack power, representing its battle-fueled frenzy."),
-        Orc(player_name, 60, 35, bloodlust),
-        # Ogre(player_name, 85, 50, "Berserker Strike: The ogre unleashes a series of powerful blows, each hit dealing increased damage. This could involve swinging a massive weapon or using brute force to pummel the enemy."),
-        Ogre(player_name, 85, 50, berserker_strike),
-        # Dragon(player_name, 200, 65, "Dragon's Breath: The dragon unleashes its ancient, elemental power in a devastating breath attack that not only causes direct damage but also alters the battlefield in a significant way."),
-        Dragon(player_name, 200, 65, dragons_breath),
-        # Skeleton(player_name, 50, 30, "Bone Shield: As the bones fly out, some of them circle back to form a temporary shield around the skeleton, providing a defensive buff or absorbing a certain amount of damage from incoming attacks."),
-        Skeleton(player_name, 50, 30, bone_shield),
-        # Zombie(player_name, 55, 40, "Plague Swarm: The zombie unleashes a virulent, contagious plague that not only damages but also has a chance to infect enemies, potentially turning them into weaker zombie minions.")
-        Zombie(player_name, 55, 40, plague_swarm)
+        Werewolf("Fierce Werewolf", 75, 45, howl_of_despair),
+        Orc("Mighty Orc", 60, 35, bloodlust),
+        Ogre("Giant Ogre", 85, 50, berserker_strike),
+        Dragon("Ancient Dragon", 200, 65, dragons_breath),
+        Skeleton("Creepy Skeleton", 50, 30, bone_shield),
+        Zombie("Scary Zombie", 55, 40, plague_swarm)
     ]
-    
-    # Randomly assign a weapon to the player
-    player_weapon = random.choice(available_weapons)
-    player.weapon = player_weapon
 
-    # Choose a random arena for the player
+    # Create a mapping of opponent classes to their special attacks
+    special_attacks_mapping = {
+        Werewolf: howl_of_despair,
+        Orc: bloodlust,
+        Ogre: berserker_strike,
+        Dragon: dragons_breath,
+        Skeleton: bone_shield,
+        Zombie: plague_swarm
+    }
+
+    # List of all opponent classes
+    opponent_classes = list(special_attacks_mapping.keys())
+
+    # Choose a random arena for the player and the opponent
     chosen_arena = random.choice(available_arenas)
+    chosen_arena.add_player(player)  # Add the player to the chosen arena
 
-    # Add the player to the chosen arena
-    chosen_arena.add_player(player)
+    # Create an opponent
+    if random.choice([True, False]):
+        # Randomly choose a monster as the opponent
+        opponent = random.choice(available_monsters)
+    else:
+        # Create a random player as the opponent
+        opponent_class = random.choice(opponent_classes)
+        opponent_special_attack = special_attacks_mapping[opponent_class]
+        opponent_name = f"{opponent_class.__name__}"
+        opponent = opponent_class(opponent_name, 100, 20, opponent_special_attack)
 
-    # Print out the selected arena and weapon for the player
-    print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
-    print(f"You are equipped with a {player_weapon.name}.")
+    chosen_arena.add_player(opponent)  # Add the opponent to the same arena
 
     # Randomly assign a weapon to the player
     player_weapon = random.choice(available_weapons)
@@ -62,6 +72,7 @@ def main():
     # Print out the selected arena, weapon, and opponent for the player
     print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
     print(f"You are equipped with a {player_weapon.name}.")
+    print(f"Your opponent is {opponent.name}, entering the {chosen_arena.name}.")
 
     # Randomly choose between a monster or another player as the opponent
     if random.choice([True, False]):
@@ -72,7 +83,6 @@ def main():
         opponent_classes = [Werewolf, Orc, Ogre, Dragon, Skeleton, Zombie]
         opponent_class = random.choice(opponent_classes)
         opponent = opponent_class(opponent_class.__name__, 100, 20, rapid_assualt)
-
 
     # Print out the selected arena, weapon, and opponent for the player
     print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
@@ -112,26 +122,35 @@ def main():
 
     # Simulate a battle
     while player.is_alive() and opponent.is_alive():
-    # Decide whether to use a special attack
+        # Initialize attack damages for this turn
+        player_attack_damage = 0
+        opponent_attack_damage = 0
+
+        # Player's turn
         if should_use_special_attack(player, opponent):
-            special_attack_damage = player.special_attack(opponent)
-            print(f"{player.name} used a special attack on {opponent.name} dealing {special_attack_damage} damage!")
-
-        # Continue with regular attacks
-        player_attack_damage = player.attack(opponent)
-        print(f"{player.name} dealt {player_attack_damage} damage to {opponent.name}!")
-
-        # Check if opponent is still alive
-        if opponent.is_alive():
-            # Opponent counterattacks
-            opponent_attack_damage = opponent.attack(player)
-            print(f"{opponent.name} dealt {opponent_attack_damage} damage to you!")
-
-            # Track damage taken by both player and opponent
-            player_damage_taken += opponent_attack_damage
-            opponent_damage_taken += player_attack_damage
-
+            player_attack_damage = player.special_attack(opponent)
+            print(f"{player.name} used a special attack on {opponent.name}, dealing {player_attack_damage} damage!")
         else:
+            # Regular attack
+            player_attack_damage = player.attack(opponent)
+            print(f"{player.name} attacked {opponent.name}, dealing {player_attack_damage} damage!")
+
+        # Check if opponent is still alive for their turn
+        if opponent.is_alive():
+            # Opponent's turn
+            if should_use_special_attack(opponent, player):
+                opponent_attack_damage = opponent.special_attack(player)
+                print(f"{opponent.name} used a special attack on {player.name}, dealing {opponent_attack_damage} damage!")
+            else:
+                # Regular attack
+                opponent_attack_damage = opponent.attack(player)
+                print(f"{opponent.name} attacked {player.name}, dealing {opponent_attack_damage} damage!")
+
+        # Track damage taken by both player and opponent
+        player_damage_taken += opponent_attack_damage
+        opponent_damage_taken += player_attack_damage
+
+        if not opponent.is_alive():
             winning_weapon = player.weapon.name
             break
 
