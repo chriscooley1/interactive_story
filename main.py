@@ -48,22 +48,47 @@ def main():
     # List of all opponent classes
     opponent_classes = list(special_attacks_mapping.keys())
 
-    # Choose a random arena for the player and the opponent
-    chosen_arena = random.choice(available_arenas)
-    chosen_arena.add_player(player)  # Add the player to the chosen arena
+    while available_arenas:
+        # Present available arenas to choose
+        print("Available Arenas:")
+        for index, arena in enumerate(available_arenas, start=1):
+            print(f"{index}. {arena.name}")
 
-    # Create an opponent
-    if random.choice([True, False]):
-        # Randomly choose a monster as the opponent
-        opponent = random.choice(available_monsters)
-    else:
-        # Create a random player as the opponent
-        opponent_class = random.choice(opponent_classes)
-        opponent_special_attack = special_attacks_mapping[opponent_class]
-        opponent_name = f"{opponent_class.__name__}"
-        opponent = opponent_class(opponent_name, 100, 20, opponent_special_attack)
+        # Get the Hero's choice
+        choice = int(input("Choose an arena by entering its number: "))
 
-    chosen_arena.add_player(opponent)  # Add the opponent to the same arena
+        # Check if choice is valid
+        if choice < 1 or choice > len(available_arenas):
+            print("Invalid choice. Please choose a valid arena.")
+            continue
+
+        # Select chosen arena and remove it from the list
+        chosen_arena = available_arenas.pop(choice - 1)
+
+        # Reset player's health and status for each new battle
+        player.health = 100
+
+        # Create an opponent
+        if random.choice([True, False]):
+            opponent = random.choice(available_monsters)
+        else:
+            opponent_class = random.choice(opponent_classes)
+            opponent_special_attack = special_attacks_mapping[opponent_class]
+            opponent_name = f"{opponent_class.__name__}"
+            opponent = opponent_class(opponent_name, 100, 20, opponent_special_attack)
+
+        # Add players to the chosen arena
+        chosen_arena.add_player(player)
+        chosen_arena.add_player(opponent)
+
+        # Equip the player with a random weapon
+        player_weapon = random.choice(available_weapons)
+        player.weapon = player_weapon
+
+        # Announce the arena and battle
+        print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
+        print(f"You are equipped with a {player_weapon.name}.")
+        print(f"Your opponent is {opponent.name}, entering the {chosen_arena.name}.")
 
     # Randomly assign a weapon to the player
     player_weapon = random.choice(available_weapons)
@@ -164,6 +189,16 @@ def main():
     print(f"Total damage dealt to {player.name}: {player_damage_taken}")
     print(f"Total damage dealt to {opponent.name}: {opponent_damage_taken}")
 
+    # Check if player won the battle
+    if player.is_alive():
+        print(f"Congratulations, {player.name}! You emerged victorious in {chosen_arena.name}.")
+    else:
+        print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+        # break  # Exit the game if the player is defeated
+
+    # After finishing all arenas
+    if not available_arenas and player.is_alive():
+        print(f"Congratulations, {player.name}! You have completed battles in all arenas and emerged as the ultimate champion.")
 
 if __name__ == "__main__":
     main()
