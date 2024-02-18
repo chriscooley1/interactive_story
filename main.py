@@ -48,47 +48,47 @@ def main():
     # List of all opponent classes
     opponent_classes = list(special_attacks_mapping.keys())
 
-    while available_arenas:
-        # Present available arenas to choose
-        print("Available Arenas:")
-        for index, arena in enumerate(available_arenas, start=1):
-            print(f"{index}. {arena.name}")
+    # Present available arenas to choose
+    print("Available Arenas:")
+    for index, arena in enumerate(available_arenas, start=1):
+        print(f"{index}. {arena.name}")
 
-        # Get the Hero's choice
-        choice = int(input("Choose an arena by entering its number: "))
+    # Get the Hero's choice
+    choice = int(input("Choose an arena by entering its number: "))
 
-        # Check if choice is valid
-        if choice < 1 or choice > len(available_arenas):
-            print("Invalid choice. Please choose a valid arena.")
-            continue
+    # Check if choice is valid
+    if choice < 1 or choice > len(available_arenas):
+        print("Invalid choice. Please choose a valid arena.")
+        # You may want to add some logic here to handle repeated invalid choices
+        return
 
-        # Select chosen arena and remove it from the list
-        chosen_arena = available_arenas.pop(choice - 1)
+    # Select chosen arena
+    chosen_arena = available_arenas[choice - 1]
 
-        # Reset player's health and status for each new battle
-        player.health = 100
+    # Reset player's health and status for each new battle
+    player.health = 100
 
-        # Create an opponent
-        if random.choice([True, False]):
-            opponent = random.choice(available_monsters)
-        else:
-            opponent_class = random.choice(opponent_classes)
-            opponent_special_attack = special_attacks_mapping[opponent_class]
-            opponent_name = f"{opponent_class.__name__}"
-            opponent = opponent_class(opponent_name, 100, 20, opponent_special_attack)
+    # Create an opponent
+    if random.choice([True, False]):
+        opponent = random.choice(available_monsters)
+    else:
+        opponent_class = random.choice(opponent_classes)
+        opponent_special_attack = special_attacks_mapping[opponent_class]
+        opponent_name = f"{opponent_class.__name__}"
+        opponent = opponent_class(opponent_name, 100, 20, opponent_special_attack)
 
-        # Add players to the chosen arena
-        chosen_arena.add_player(player)
-        chosen_arena.add_player(opponent)
+    # Add players to the chosen arena
+    chosen_arena.add_player(player)
+    chosen_arena.add_player(opponent)
 
-        # Equip the player with a random weapon
-        player_weapon = random.choice(available_weapons)
-        player.weapon = player_weapon
+    # Equip the player with a random weapon
+    player_weapon = random.choice(available_weapons)
+    player.weapon = player_weapon
 
-        # Announce the arena and battle
-        print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
-        print(f"You are equipped with a {player_weapon.name}.")
-        print(f"Your opponent is {opponent.name}, entering the {chosen_arena.name}.")
+    # Announce the arena and battle
+    print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
+    print(f"You are equipped with a {player_weapon.name}.")
+    print(f"Your opponent is {opponent.name}, entering the {chosen_arena.name}.")
 
     # Randomly assign a weapon to the player
     player_weapon = random.choice(available_weapons)
@@ -194,11 +194,447 @@ def main():
         print(f"Congratulations, {player.name}! You emerged victorious in {chosen_arena.name}.")
     else:
         print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
-        # break  # Exit the game if the player is defeated
 
-    # After finishing all arenas
-    if not available_arenas and player.is_alive():
-        print(f"Congratulations, {player.name}! You have completed battles in all arenas and emerged as the ultimate champion.")
+# Present available arenas to choose
+    print("Available Arenas:")
+    for index, arena in enumerate(available_arenas, start=1):
+        print(f"{index}. {arena.name}")
+
+    # Get the Hero's choice
+    choice = int(input("Choose an arena by entering its number: "))
+
+    # Check if choice is valid
+    if choice < 1 or choice > len(available_arenas):
+        print("Invalid choice. Please choose a valid arena.")
+        # You may want to add some logic here to handle repeated invalid choices
+        return
+
+    # Select chosen arena
+    chosen_arena = available_arenas[choice - 1]
+
+    # Reset player's health and status for each new battle
+    player.health = 100
+
+    # Create an opponent
+    if random.choice([True, False]):
+        opponent = random.choice(available_monsters)
+    else:
+        opponent_class = random.choice(opponent_classes)
+        opponent_special_attack = special_attacks_mapping[opponent_class]
+        opponent_name = f"{opponent_class.__name__}"
+        opponent = opponent_class(opponent_name, 100, 20, opponent_special_attack)
+
+    # Add players to the chosen arena
+    chosen_arena.add_player(player)
+    chosen_arena.add_player(opponent)
+
+    # Equip the player with a random weapon
+    player_weapon = random.choice(available_weapons)
+    player.weapon = player_weapon
+
+    # Announce the arena and battle
+    print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
+    print(f"You are equipped with a {player_weapon.name}.")
+    print(f"Your opponent is {opponent.name}, entering the {chosen_arena.name}.")
+
+    # Randomly assign a weapon to the player
+    player_weapon = random.choice(available_weapons)
+    player.weapon = player_weapon
+
+    # Print out the selected arena, weapon, and opponent for the player
+    print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
+    print(f"You are equipped with a {player_weapon.name}.")
+    print(f"Your opponent is {opponent.name}, entering the {chosen_arena.name}.")
+
+    # Randomly choose between a monster or another player as the opponent
+    if random.choice([True, False]):
+        # Randomly choose a monster as the opponent
+        opponent = random.choice(available_monsters)
+    else:
+        # Create a random player as the opponent
+        opponent_classes = [Werewolf, Orc, Ogre, Dragon, Skeleton, Zombie]
+        opponent_class = random.choice(opponent_classes)
+        opponent = opponent_class(opponent_class.__name__, 100, 20, rapid_assualt)
+
+    # Print out the selected arena, weapon, and opponent for the player
+    print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
+    print(f"You are equipped with a {player_weapon.name}.")
+
+    # Check if opponent is a monster or a player and print their information accordingly
+    if isinstance(opponent, Player):
+        opponent_damage = opponent.attack_power + (opponent.weapon.damage if opponent.weapon else 0)
+        print(f"Your opponent is {opponent.name} with {opponent.health} health and {opponent_damage} damage.")
+    else:
+        print(f"Your opponent is {opponent.name} with {opponent.health} health and {opponent.attack_damage} damage.")
+
+    # Simulate the interactive story based on the chosen arena
+    if isinstance(chosen_arena, TheBattleArena):
+        print("As you enter the gladiatorial arena, the crowd roars with excitement. The atmosphere is charged with tension.")
+        # Add more narrative specific to TheBattleArena
+    elif isinstance(chosen_arena, TheForestArena):
+        print("You find yourself in a dense forest, surrounded by towering trees and mysterious sounds. The air is filled with the scent of nature.")
+        # Add more narrative specific to TheForestArena
+    elif isinstance(chosen_arena, TheDesertArena):
+        print("The scorching sun beats down on the endless expanse of the desert. The heat is almost unbearable, and the sand stretches as far as the eye can see.")
+        # Add more narrative specific to TheDesertArena
+    elif isinstance(chosen_arena, TheIceArena):
+        print("You stand on a frozen wasteland, the icy ground beneath your feet. The air is bone-chilling, and the sound of cracking ice echoes in the distance.")
+        # Add more narrative specific to TheIceArena
+
+    # Initialize winning_weapon outside the battle loop
+    winning_weapon = None
+
+    # Initialize damage counters
+    player_damage_taken = 0
+    opponent_damage_taken = 0
+
+    def should_use_special_attack(player, opponent):
+    # Example condition: use special attack randomly
+        return random.choice([True, False])
+
+    # Simulate a battle
+    while player.is_alive() and opponent.is_alive():
+        # Initialize attack damages for this turn
+        player_attack_damage = 0
+        opponent_attack_damage = 0
+
+        # Player's turn
+        if should_use_special_attack(player, opponent):
+            player_attack_damage = player.special_attack(opponent)
+            print(f"{player.name} used a special attack on {opponent.name}, dealing {player_attack_damage} damage!")
+        else:
+            # Regular attack
+            player_attack_damage = player.attack(opponent)
+            print(f"{player.name} attacked {opponent.name}, dealing {player_attack_damage} damage!")
+
+        # Check if opponent is still alive for their turn
+        if opponent.is_alive():
+            # Opponent's turn
+            if should_use_special_attack(opponent, player):
+                opponent_attack_damage = opponent.special_attack(player)
+                print(f"{opponent.name} used a special attack on {player.name}, dealing {opponent_attack_damage} damage!")
+            else:
+                # Regular attack
+                opponent_attack_damage = opponent.attack(player)
+                print(f"{opponent.name} attacked {player.name}, dealing {opponent_attack_damage} damage!")
+
+        # Track damage taken by both player and opponent
+        player_damage_taken += opponent_attack_damage
+        opponent_damage_taken += player_attack_damage
+
+        if not opponent.is_alive():
+            winning_weapon = player.weapon.name
+            break
+
+    # Determine the winner and display damage information
+    if winning_weapon is not None:
+        print(f"Congratulations, {player.name}! You emerged victorious with {winning_weapon}.")
+    else:
+        print(f"Unfortunately, you have been defeated. Better luck next time!")
+
+    # Display damage information
+    print(f"Total damage dealt to {player.name}: {player_damage_taken}")
+    print(f"Total damage dealt to {opponent.name}: {opponent_damage_taken}")
+
+    # Check if player won the battle
+    if player.is_alive():
+        print(f"Congratulations, {player.name}! You emerged victorious in {chosen_arena.name}.")
+    else:
+        print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+
+# Present available arenas to choose
+    print("Available Arenas:")
+    for index, arena in enumerate(available_arenas, start=1):
+        print(f"{index}. {arena.name}")
+
+    # Get the Hero's choice
+    choice = int(input("Choose an arena by entering its number: "))
+
+    # Check if choice is valid
+    if choice < 1 or choice > len(available_arenas):
+        print("Invalid choice. Please choose a valid arena.")
+        # You may want to add some logic here to handle repeated invalid choices
+        return
+
+    # Select chosen arena
+    chosen_arena = available_arenas[choice - 1]
+
+    # Reset player's health and status for each new battle
+    player.health = 100
+
+    # Create an opponent
+    if random.choice([True, False]):
+        opponent = random.choice(available_monsters)
+    else:
+        opponent_class = random.choice(opponent_classes)
+        opponent_special_attack = special_attacks_mapping[opponent_class]
+        opponent_name = f"{opponent_class.__name__}"
+        opponent = opponent_class(opponent_name, 100, 20, opponent_special_attack)
+
+    # Add players to the chosen arena
+    chosen_arena.add_player(player)
+    chosen_arena.add_player(opponent)
+
+    # Equip the player with a random weapon
+    player_weapon = random.choice(available_weapons)
+    player.weapon = player_weapon
+
+    # Announce the arena and battle
+    print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
+    print(f"You are equipped with a {player_weapon.name}.")
+    print(f"Your opponent is {opponent.name}, entering the {chosen_arena.name}.")
+
+    # Randomly assign a weapon to the player
+    player_weapon = random.choice(available_weapons)
+    player.weapon = player_weapon
+
+    # Print out the selected arena, weapon, and opponent for the player
+    print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
+    print(f"You are equipped with a {player_weapon.name}.")
+    print(f"Your opponent is {opponent.name}, entering the {chosen_arena.name}.")
+
+    # Randomly choose between a monster or another player as the opponent
+    if random.choice([True, False]):
+        # Randomly choose a monster as the opponent
+        opponent = random.choice(available_monsters)
+    else:
+        # Create a random player as the opponent
+        opponent_classes = [Werewolf, Orc, Ogre, Dragon, Skeleton, Zombie]
+        opponent_class = random.choice(opponent_classes)
+        opponent = opponent_class(opponent_class.__name__, 100, 20, rapid_assualt)
+
+    # Print out the selected arena, weapon, and opponent for the player
+    print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
+    print(f"You are equipped with a {player_weapon.name}.")
+
+    # Check if opponent is a monster or a player and print their information accordingly
+    if isinstance(opponent, Player):
+        opponent_damage = opponent.attack_power + (opponent.weapon.damage if opponent.weapon else 0)
+        print(f"Your opponent is {opponent.name} with {opponent.health} health and {opponent_damage} damage.")
+    else:
+        print(f"Your opponent is {opponent.name} with {opponent.health} health and {opponent.attack_damage} damage.")
+
+    # Simulate the interactive story based on the chosen arena
+    if isinstance(chosen_arena, TheBattleArena):
+        print("As you enter the gladiatorial arena, the crowd roars with excitement. The atmosphere is charged with tension.")
+        # Add more narrative specific to TheBattleArena
+    elif isinstance(chosen_arena, TheForestArena):
+        print("You find yourself in a dense forest, surrounded by towering trees and mysterious sounds. The air is filled with the scent of nature.")
+        # Add more narrative specific to TheForestArena
+    elif isinstance(chosen_arena, TheDesertArena):
+        print("The scorching sun beats down on the endless expanse of the desert. The heat is almost unbearable, and the sand stretches as far as the eye can see.")
+        # Add more narrative specific to TheDesertArena
+    elif isinstance(chosen_arena, TheIceArena):
+        print("You stand on a frozen wasteland, the icy ground beneath your feet. The air is bone-chilling, and the sound of cracking ice echoes in the distance.")
+        # Add more narrative specific to TheIceArena
+
+    # Initialize winning_weapon outside the battle loop
+    winning_weapon = None
+
+    # Initialize damage counters
+    player_damage_taken = 0
+    opponent_damage_taken = 0
+
+    def should_use_special_attack(player, opponent):
+    # Example condition: use special attack randomly
+        return random.choice([True, False])
+
+    # Simulate a battle
+    while player.is_alive() and opponent.is_alive():
+        # Initialize attack damages for this turn
+        player_attack_damage = 0
+        opponent_attack_damage = 0
+
+        # Player's turn
+        if should_use_special_attack(player, opponent):
+            player_attack_damage = player.special_attack(opponent)
+            print(f"{player.name} used a special attack on {opponent.name}, dealing {player_attack_damage} damage!")
+        else:
+            # Regular attack
+            player_attack_damage = player.attack(opponent)
+            print(f"{player.name} attacked {opponent.name}, dealing {player_attack_damage} damage!")
+
+        # Check if opponent is still alive for their turn
+        if opponent.is_alive():
+            # Opponent's turn
+            if should_use_special_attack(opponent, player):
+                opponent_attack_damage = opponent.special_attack(player)
+                print(f"{opponent.name} used a special attack on {player.name}, dealing {opponent_attack_damage} damage!")
+            else:
+                # Regular attack
+                opponent_attack_damage = opponent.attack(player)
+                print(f"{opponent.name} attacked {player.name}, dealing {opponent_attack_damage} damage!")
+
+        # Track damage taken by both player and opponent
+        player_damage_taken += opponent_attack_damage
+        opponent_damage_taken += player_attack_damage
+
+        if not opponent.is_alive():
+            winning_weapon = player.weapon.name
+            break
+
+    # Determine the winner and display damage information
+    if winning_weapon is not None:
+        print(f"Congratulations, {player.name}! You emerged victorious with {winning_weapon}.")
+    else:
+        print(f"Unfortunately, you have been defeated. Better luck next time!")
+
+    # Display damage information
+    print(f"Total damage dealt to {player.name}: {player_damage_taken}")
+    print(f"Total damage dealt to {opponent.name}: {opponent_damage_taken}")
+
+    # Check if player won the battle
+    if player.is_alive():
+        print(f"Congratulations, {player.name}! You emerged victorious in {chosen_arena.name}.")
+    else:
+        print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+
+# Present available arenas to choose
+    print("Available Arenas:")
+    for index, arena in enumerate(available_arenas, start=1):
+        print(f"{index}. {arena.name}")
+
+    # Get the Hero's choice
+    choice = int(input("Choose an arena by entering its number: "))
+
+    # Check if choice is valid
+    if choice < 1 or choice > len(available_arenas):
+        print("Invalid choice. Please choose a valid arena.")
+        # You may want to add some logic here to handle repeated invalid choices
+        return
+
+    # Select chosen arena
+    chosen_arena = available_arenas[choice - 1]
+
+    # Reset player's health and status for each new battle
+    player.health = 100
+
+    # Create an opponent
+    if random.choice([True, False]):
+        opponent = random.choice(available_monsters)
+    else:
+        opponent_class = random.choice(opponent_classes)
+        opponent_special_attack = special_attacks_mapping[opponent_class]
+        opponent_name = f"{opponent_class.__name__}"
+        opponent = opponent_class(opponent_name, 100, 20, opponent_special_attack)
+
+    # Add players to the chosen arena
+    chosen_arena.add_player(player)
+    chosen_arena.add_player(opponent)
+
+    # Equip the player with a random weapon
+    player_weapon = random.choice(available_weapons)
+    player.weapon = player_weapon
+
+    # Announce the arena and battle
+    print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
+    print(f"You are equipped with a {player_weapon.name}.")
+    print(f"Your opponent is {opponent.name}, entering the {chosen_arena.name}.")
+
+    # Randomly assign a weapon to the player
+    player_weapon = random.choice(available_weapons)
+    player.weapon = player_weapon
+
+    # Print out the selected arena, weapon, and opponent for the player
+    print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
+    print(f"You are equipped with a {player_weapon.name}.")
+    print(f"Your opponent is {opponent.name}, entering the {chosen_arena.name}.")
+
+    # Randomly choose between a monster or another player as the opponent
+    if random.choice([True, False]):
+        # Randomly choose a monster as the opponent
+        opponent = random.choice(available_monsters)
+    else:
+        # Create a random player as the opponent
+        opponent_classes = [Werewolf, Orc, Ogre, Dragon, Skeleton, Zombie]
+        opponent_class = random.choice(opponent_classes)
+        opponent = opponent_class(opponent_class.__name__, 100, 20, rapid_assualt)
+
+    # Print out the selected arena, weapon, and opponent for the player
+    print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
+    print(f"You are equipped with a {player_weapon.name}.")
+
+    # Check if opponent is a monster or a player and print their information accordingly
+    if isinstance(opponent, Player):
+        opponent_damage = opponent.attack_power + (opponent.weapon.damage if opponent.weapon else 0)
+        print(f"Your opponent is {opponent.name} with {opponent.health} health and {opponent_damage} damage.")
+    else:
+        print(f"Your opponent is {opponent.name} with {opponent.health} health and {opponent.attack_damage} damage.")
+
+    # Simulate the interactive story based on the chosen arena
+    if isinstance(chosen_arena, TheBattleArena):
+        print("As you enter the gladiatorial arena, the crowd roars with excitement. The atmosphere is charged with tension.")
+        # Add more narrative specific to TheBattleArena
+    elif isinstance(chosen_arena, TheForestArena):
+        print("You find yourself in a dense forest, surrounded by towering trees and mysterious sounds. The air is filled with the scent of nature.")
+        # Add more narrative specific to TheForestArena
+    elif isinstance(chosen_arena, TheDesertArena):
+        print("The scorching sun beats down on the endless expanse of the desert. The heat is almost unbearable, and the sand stretches as far as the eye can see.")
+        # Add more narrative specific to TheDesertArena
+    elif isinstance(chosen_arena, TheIceArena):
+        print("You stand on a frozen wasteland, the icy ground beneath your feet. The air is bone-chilling, and the sound of cracking ice echoes in the distance.")
+        # Add more narrative specific to TheIceArena
+
+    # Initialize winning_weapon outside the battle loop
+    winning_weapon = None
+
+    # Initialize damage counters
+    player_damage_taken = 0
+    opponent_damage_taken = 0
+
+    def should_use_special_attack(player, opponent):
+    # Example condition: use special attack randomly
+        return random.choice([True, False])
+
+    # Simulate a battle
+    while player.is_alive() and opponent.is_alive():
+        # Initialize attack damages for this turn
+        player_attack_damage = 0
+        opponent_attack_damage = 0
+
+        # Player's turn
+        if should_use_special_attack(player, opponent):
+            player_attack_damage = player.special_attack(opponent)
+            print(f"{player.name} used a special attack on {opponent.name}, dealing {player_attack_damage} damage!")
+        else:
+            # Regular attack
+            player_attack_damage = player.attack(opponent)
+            print(f"{player.name} attacked {opponent.name}, dealing {player_attack_damage} damage!")
+
+        # Check if opponent is still alive for their turn
+        if opponent.is_alive():
+            # Opponent's turn
+            if should_use_special_attack(opponent, player):
+                opponent_attack_damage = opponent.special_attack(player)
+                print(f"{opponent.name} used a special attack on {player.name}, dealing {opponent_attack_damage} damage!")
+            else:
+                # Regular attack
+                opponent_attack_damage = opponent.attack(player)
+                print(f"{opponent.name} attacked {player.name}, dealing {opponent_attack_damage} damage!")
+
+        # Track damage taken by both player and opponent
+        player_damage_taken += opponent_attack_damage
+        opponent_damage_taken += player_attack_damage
+
+        if not opponent.is_alive():
+            winning_weapon = player.weapon.name
+            break
+
+    # Determine the winner and display damage information
+    if winning_weapon is not None:
+        print(f"Congratulations, {player.name}! You emerged victorious with {winning_weapon}.")
+    else:
+        print(f"Unfortunately, you have been defeated. Better luck next time!")
+
+    # Display damage information
+    print(f"Total damage dealt to {player.name}: {player_damage_taken}")
+    print(f"Total damage dealt to {opponent.name}: {opponent_damage_taken}")
+
+    # Check if player won the battle
+    if player.is_alive():
+        print(f"Congratulations, {player.name}! You emerged victorious in {chosen_arena.name}.")
+    else:
+        print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
 
 if __name__ == "__main__":
     main()
