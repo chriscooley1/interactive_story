@@ -6,6 +6,7 @@ import random
 def main():
 
     player_choice = None  # Initialize to None or some default value
+    victories = 0
     
     # Define a list of available weapons with their name and damage
     available_weapons = [
@@ -86,46 +87,55 @@ def main():
     chosen_arena = available_arenas[choice - 1]
 
     if isinstance(chosen_arena, TheBattleArena):
-        player_choice = input("Choose 'weapon' or 'run': ").lower()
-        if player_choice == 'weapon':
+        player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
+        if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
-        else:
+        elif player_choice == 2:
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
+        else:
+            print("Invalid choice. Please choose a valid option.")
+
     # Additional narrative and player choices here
     elif isinstance(chosen_arena, TheForestArena):
-        player_choice = input("Choose 'weapon' or 'run': ").lower()
-        if player_choice == 'weapon':
+        player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
+        if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
-        else:
+        elif player_choice == 2:
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
+        else:
+            print("Invalid choice. Please choose a valid option.")
     elif isinstance(chosen_arena, TheDesertArena):
-        player_choice = input("Choose 'weapon' or 'run': ").lower()
-        if player_choice == 'weapon':
+        player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
+        if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
-        else:
+        elif player_choice == 2:
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
+        else:
+            print("Invalid choice. Please choose a valid option.")
     elif isinstance(chosen_arena, TheIceArena):
-        player_choice = input("Choose 'weapon' or 'run': ").lower()
-        if player_choice == 'weapon':
+        player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
+        if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
-        else:
+        elif player_choice == 2:
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
+        else:
+            print("Invalid choice. Please choose a valid option.")
 
     # Reset player's health and status for each new battle
     player.health = 100
@@ -143,7 +153,7 @@ def main():
     chosen_arena.add_player(player)
     chosen_arena.add_player(opponent)
 
-    # Announcement of the arena, weapon, and opponent - ensure this happens only once
+    # Announcement of the arena, weapon, and opponent
     print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
     print(f"You are equipped with a {player.weapon.name}.")
     print(f"Your opponent is {opponent.name}, entering the {chosen_arena.name}.")
@@ -188,14 +198,12 @@ def main():
             player_attack_damage = player.attack(opponent)
             print(f"{player.name} attacked {opponent.name}, dealing {player_attack_damage} damage!")
 
-        # Check if opponent is still alive for their turn
+        # Opponent's turn
         if opponent.is_alive():
-            # Opponent's turn
             if should_use_special_attack(opponent, player):
                 opponent_attack_damage = opponent.special_attack(player)
                 print(f"{opponent.name} used a special attack on {player.name}, dealing {opponent_attack_damage} damage!")
             else:
-                # Regular attack
                 opponent_attack_damage = opponent.attack(player)
                 print(f"{opponent.name} attacked {player.name}, dealing {opponent_attack_damage} damage!")
 
@@ -203,25 +211,19 @@ def main():
         player_damage_taken += opponent_attack_damage
         opponent_damage_taken += player_attack_damage
 
+        # Check the outcome of the battle
         if not opponent.is_alive():
             winning_weapon = player.weapon.name
-            break
-
-    # Determine the winner and display damage information
-    if winning_weapon is not None:
-        print(f"Congratulations, {player.name}! You emerged victorious with {winning_weapon}.")
-    else:
-        print(f"Unfortunately, you have been defeated. Better luck next time!")
+            print(f"Congratulations, {player.name}! You emerged victorious with {winning_weapon}.")
+            victories += 1
+        elif not player.is_alive():
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
 
     # Display damage information
     print(f"Total damage dealt to {player.name}: {player_damage_taken}")
     print(f"Total damage dealt to {opponent.name}: {opponent_damage_taken}")
 
-    # Check if player won the battle
-    if player.is_alive():
-        print(f"Congratulations, {player.name}! You emerged victorious in {chosen_arena.name}.")
-    else:
-        print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
 
 # Present available arenas to choose
     print("Available Arenas:")
@@ -240,46 +242,54 @@ def main():
     chosen_arena = available_arenas[choice - 1]
 
     if isinstance(chosen_arena, TheBattleArena):
-        player_choice = input("Choose 'weapon' or 'run': ").lower()
-        if player_choice == 'weapon':
+        player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
+        if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
-        else:
+        elif player_choice == 2:
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
+        else:
+            print("Invalid choice. Please choose a valid option.")
     # Additional narrative and player choices here
     elif isinstance(chosen_arena, TheForestArena):
-        player_choice = input("Choose 'weapon' or 'run': ").lower()
-        if player_choice == 'weapon':
+        player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
+        if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
-        else:
+        elif player_choice == 2:
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
+        else:
+            print("Invalid choice. Please choose a valid option.")
     elif isinstance(chosen_arena, TheDesertArena):
-        player_choice = input("Choose 'weapon' or 'run': ").lower()
-        if player_choice == 'weapon':
+        player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
+        if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
-        else:
+        elif player_choice == 2:
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
+        else:
+            print("Invalid choice. Please choose a valid option.")
     elif isinstance(chosen_arena, TheIceArena):
-        player_choice = input("Choose 'weapon' or 'run': ").lower()
-        if player_choice == 'weapon':
+        player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
+        if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
-        else:
+        elif player_choice == 2:
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
+        else:
+            print("Invalid choice. Please choose a valid option.")
 
     # Reset player's health and status for each new battle
     player.health = 100
@@ -342,14 +352,12 @@ def main():
             player_attack_damage = player.attack(opponent)
             print(f"{player.name} attacked {opponent.name}, dealing {player_attack_damage} damage!")
 
-        # Check if opponent is still alive for their turn
+        # Opponent's turn
         if opponent.is_alive():
-            # Opponent's turn
             if should_use_special_attack(opponent, player):
                 opponent_attack_damage = opponent.special_attack(player)
                 print(f"{opponent.name} used a special attack on {player.name}, dealing {opponent_attack_damage} damage!")
             else:
-                # Regular attack
                 opponent_attack_damage = opponent.attack(player)
                 print(f"{opponent.name} attacked {player.name}, dealing {opponent_attack_damage} damage!")
 
@@ -357,16 +365,15 @@ def main():
         player_damage_taken += opponent_attack_damage
         opponent_damage_taken += player_attack_damage
 
+        # Check the outcome of the battle
         if not opponent.is_alive():
             winning_weapon = player.weapon.name
-            break
-
-    # Determine the winner and display damage information
-    if winning_weapon is not None:
-        print(f"Congratulations, {player.name}! You emerged victorious with {winning_weapon}.")
-    else:
-        print(f"Unfortunately, you have been defeated. Better luck next time!")
-
+            print(f"Congratulations, {player.name}! You emerged victorious with {winning_weapon}.")
+            victories += 1
+        elif not player.is_alive():
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
+    
     # Display damage information
     print(f"Total damage dealt to {player.name}: {player_damage_taken}")
     print(f"Total damage dealt to {opponent.name}: {opponent_damage_taken}")
@@ -376,6 +383,7 @@ def main():
         print(f"Congratulations, {player.name}! You emerged victorious in {chosen_arena.name}.")
     else:
         print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+        return  # Exit the function to end the game
 
     # Present available arenas to choose
     print("Available Arenas:")
@@ -394,46 +402,54 @@ def main():
     chosen_arena = available_arenas[choice - 1]
 
     if isinstance(chosen_arena, TheBattleArena):
-        player_choice = input("Choose 'weapon' or 'run': ").lower()
-        if player_choice == 'weapon':
+        player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
+        if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
-        else:
+        elif player_choice == 2:
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
+        else:
+            print("Invalid choice. Please choose a valid option.")
     # Additional narrative and player choices here
     elif isinstance(chosen_arena, TheForestArena):
-        player_choice = input("Choose 'weapon' or 'run': ").lower()
-        if player_choice == 'weapon':
+        player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
+        if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
-        else:
+        elif player_choice == 2:
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
+        else:
+            print("Invalid choice. Please choose a valid option.")
     elif isinstance(chosen_arena, TheDesertArena):
-        player_choice = input("Choose 'weapon' or 'run': ").lower()
-        if player_choice == 'weapon':
+        player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
+        if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
-        else:
+        elif player_choice == 2:
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
+        else:
+            print("Invalid choice. Please choose a valid option.")
     elif isinstance(chosen_arena, TheIceArena):
-        player_choice = input("Choose 'weapon' or 'run': ").lower()
-        if player_choice == 'weapon':
+        player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
+        if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
-        else:
+        elif player_choice == 2:
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
+        else:
+            print("Invalid choice. Please choose a valid option.")
 
     # Reset player's health and status for each new battle
     player.health = 100
@@ -496,14 +512,12 @@ def main():
             player_attack_damage = player.attack(opponent)
             print(f"{player.name} attacked {opponent.name}, dealing {player_attack_damage} damage!")
 
-        # Check if opponent is still alive for their turn
+        # Opponent's turn
         if opponent.is_alive():
-            # Opponent's turn
             if should_use_special_attack(opponent, player):
                 opponent_attack_damage = opponent.special_attack(player)
                 print(f"{opponent.name} used a special attack on {player.name}, dealing {opponent_attack_damage} damage!")
             else:
-                # Regular attack
                 opponent_attack_damage = opponent.attack(player)
                 print(f"{opponent.name} attacked {player.name}, dealing {opponent_attack_damage} damage!")
 
@@ -511,25 +525,14 @@ def main():
         player_damage_taken += opponent_attack_damage
         opponent_damage_taken += player_attack_damage
 
+        # Check the outcome of the battle
         if not opponent.is_alive():
             winning_weapon = player.weapon.name
-            break
-
-    # Determine the winner and display damage information
-    if winning_weapon is not None:
-        print(f"Congratulations, {player.name}! You emerged victorious with {winning_weapon}.")
-    else:
-        print(f"Unfortunately, you have been defeated. Better luck next time!")
-
-    # Display damage information
-    print(f"Total damage dealt to {player.name}: {player_damage_taken}")
-    print(f"Total damage dealt to {opponent.name}: {opponent_damage_taken}")
-
-    # Check if player won the battle
-    if player.is_alive():
-        print(f"Congratulations, {player.name}! You emerged victorious in {chosen_arena.name}.")
-    else:
-        print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            print(f"Congratulations, {player.name}! You emerged victorious with {winning_weapon}.")
+            victories += 1
+        elif not player.is_alive():
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
 
 # Present available arenas to choose
     print("Available Arenas:")
@@ -548,46 +551,54 @@ def main():
     chosen_arena = available_arenas[choice - 1]
 
     if isinstance(chosen_arena, TheBattleArena):
-        player_choice = input("Choose 'weapon' or 'run': ").lower()
-        if player_choice == 'weapon':
+        player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
+        if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
-        else:
+        elif player_choice == 2:
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
+        else:
+            print("Invalid choice. Please choose a valid option.")
     # Additional narrative and player choices here
     elif isinstance(chosen_arena, TheForestArena):
-        player_choice = input("Choose 'weapon' or 'run': ").lower()
-        if player_choice == 'weapon':
+        player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
+        if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
-        else:
+        elif player_choice == 2:
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
+        else:
+            print("Invalid choice. Please choose a valid option.")
     elif isinstance(chosen_arena, TheDesertArena):
-        player_choice = input("Choose 'weapon' or 'run': ").lower()
-        if player_choice == 'weapon':
+        player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
+        if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
-        else:
+        elif player_choice == 2:
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
+        else:
+            print("Invalid choice. Please choose a valid option.")
     elif isinstance(chosen_arena, TheIceArena):
-        player_choice = input("Choose 'weapon' or 'run': ").lower()
-        if player_choice == 'weapon':
+        player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
+        if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
-        else:
+        elif player_choice == 2:
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
+        else:
+            print("Invalid choice. Please choose a valid option.")
 
     # Reset player's health and status for each new battle
     player.health = 100
@@ -650,14 +661,12 @@ def main():
             player_attack_damage = player.attack(opponent)
             print(f"{player.name} attacked {opponent.name}, dealing {player_attack_damage} damage!")
 
-        # Check if opponent is still alive for their turn
+        # Opponent's turn
         if opponent.is_alive():
-            # Opponent's turn
             if should_use_special_attack(opponent, player):
                 opponent_attack_damage = opponent.special_attack(player)
                 print(f"{opponent.name} used a special attack on {player.name}, dealing {opponent_attack_damage} damage!")
             else:
-                # Regular attack
                 opponent_attack_damage = opponent.attack(player)
                 print(f"{opponent.name} attacked {player.name}, dealing {opponent_attack_damage} damage!")
 
@@ -665,15 +674,14 @@ def main():
         player_damage_taken += opponent_attack_damage
         opponent_damage_taken += player_attack_damage
 
+        # Check the outcome of the battle
         if not opponent.is_alive():
             winning_weapon = player.weapon.name
-            break
-
-    # Determine the winner and display damage information
-    if winning_weapon is not None:
-        print(f"Congratulations, {player.name}! You emerged victorious with {winning_weapon}.")
-    else:
-        print(f"Unfortunately, you have been defeated. Better luck next time!")
+            print(f"Congratulations, {player.name}! You emerged victorious with {winning_weapon}.")
+            victories += 1
+        elif not player.is_alive():
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
 
     # Display damage information
     print(f"Total damage dealt to {player.name}: {player_damage_taken}")
@@ -684,6 +692,9 @@ def main():
         print(f"Congratulations, {player.name}! You emerged victorious in {chosen_arena.name}.")
     else:
         print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+        return  # Exit the function to end the game
+    if victories == len(available_arenas):
+        print(f"Amazing! {player.name} has emerged victorious in all arenas! A true champion of the realms!")
 
 if __name__ == "__main__":
     main()
