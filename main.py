@@ -4,6 +4,9 @@ from arenas import TheBattleArena, TheForestArena, TheDesertArena, TheIceArena
 import random
 
 def main():
+
+    player_choice = None  # Initialize to None or some default value
+    
     # Define a list of available weapons with their name and damage
     available_weapons = [
         Sword("Sword", 30),
@@ -12,6 +15,24 @@ def main():
         Dagger("Dagger", 20),
         Mace("Mace", 40)
     ]
+
+    # Add this function to allow the player to choose a weapon
+    def choose_weapon(available_weapons):
+        print("Available Weapons:")
+        for index, weapon in enumerate(available_weapons, start=1):
+            print(f"{index}. {weapon.name} (Damage: {weapon.damage})")
+        choice = int(input("Choose a weapon by entering its number: "))
+        if 1 <= choice <= len(available_weapons):
+            return available_weapons[choice - 1]
+        else:
+            print("Invalid choice. Defaulting to the first weapon.")
+            return available_weapons[0]
+
+    # Modify the player choice section in the main function
+    if player_choice == 'weapon':
+        player_weapon = choose_weapon(available_weapons)
+        player.weapon = player_weapon
+        print(f"You pick up the {player_weapon.name}. Prepare for battle!")
 
     # Define a list of available arenas with their name and description
     available_arenas = [
@@ -65,6 +86,48 @@ def main():
     # Select chosen arena
     chosen_arena = available_arenas[choice - 1]
 
+    if isinstance(chosen_arena, TheBattleArena):
+        player_choice = input("Choose 'weapon' or 'run': ").lower()
+        if player_choice == 'weapon':
+            player_weapon = choose_weapon(available_weapons)
+            player.weapon = player_weapon
+            print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+        else:
+            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
+    # Additional narrative and player choices here
+    elif isinstance(chosen_arena, TheForestArena):
+        player_choice = input("Choose 'weapon' or 'run': ").lower()
+        if player_choice == 'weapon':
+            player_weapon = choose_weapon(available_weapons)
+            player.weapon = player_weapon
+            print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+        else:
+            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
+    elif isinstance(chosen_arena, TheDesertArena):
+        player_choice = input("Choose 'weapon' or 'run': ").lower()
+        if player_choice == 'weapon':
+            player_weapon = choose_weapon(available_weapons)
+            player.weapon = player_weapon
+            print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+        else:
+            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
+    elif isinstance(chosen_arena, TheIceArena):
+        player_choice = input("Choose 'weapon' or 'run': ").lower()
+        if player_choice == 'weapon':
+            player_weapon = choose_weapon(available_weapons)
+            player.weapon = player_weapon
+            print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+        else:
+            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
+
     # Reset player's health and status for each new battle
     player.health = 100
 
@@ -212,6 +275,48 @@ def main():
     # Select chosen arena
     chosen_arena = available_arenas[choice - 1]
 
+    if isinstance(chosen_arena, TheBattleArena):
+        player_choice = input("Choose 'weapon' or 'run': ").lower()
+        if player_choice == 'weapon':
+            player_weapon = choose_weapon(available_weapons)
+            player.weapon = player_weapon
+            print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+        else:
+            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
+    # Additional narrative and player choices here
+    elif isinstance(chosen_arena, TheForestArena):
+        player_choice = input("Choose 'weapon' or 'run': ").lower()
+        if player_choice == 'weapon':
+            player_weapon = choose_weapon(available_weapons)
+            player.weapon = player_weapon
+            print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+        else:
+            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
+    elif isinstance(chosen_arena, TheDesertArena):
+        player_choice = input("Choose 'weapon' or 'run': ").lower()
+        if player_choice == 'weapon':
+            player_weapon = choose_weapon(available_weapons)
+            player.weapon = player_weapon
+            print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+        else:
+            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
+    elif isinstance(chosen_arena, TheIceArena):
+        player_choice = input("Choose 'weapon' or 'run': ").lower()
+        if player_choice == 'weapon':
+            player_weapon = choose_weapon(available_weapons)
+            player.weapon = player_weapon
+            print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+        else:
+            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
+
     # Reset player's health and status for each new battle
     player.health = 100
 
@@ -359,6 +464,48 @@ def main():
     # Select chosen arena
     chosen_arena = available_arenas[choice - 1]
 
+    if isinstance(chosen_arena, TheBattleArena):
+        player_choice = input("Choose 'weapon' or 'run': ").lower()
+        if player_choice == 'weapon':
+            player_weapon = choose_weapon(available_weapons)
+            player.weapon = player_weapon
+            print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+        else:
+            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
+    # Additional narrative and player choices here
+    elif isinstance(chosen_arena, TheForestArena):
+        player_choice = input("Choose 'weapon' or 'run': ").lower()
+        if player_choice == 'weapon':
+            player_weapon = choose_weapon(available_weapons)
+            player.weapon = player_weapon
+            print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+        else:
+            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
+    elif isinstance(chosen_arena, TheDesertArena):
+        player_choice = input("Choose 'weapon' or 'run': ").lower()
+        if player_choice == 'weapon':
+            player_weapon = choose_weapon(available_weapons)
+            player.weapon = player_weapon
+            print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+        else:
+            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
+    elif isinstance(chosen_arena, TheIceArena):
+        player_choice = input("Choose 'weapon' or 'run': ").lower()
+        if player_choice == 'weapon':
+            player_weapon = choose_weapon(available_weapons)
+            player.weapon = player_weapon
+            print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+        else:
+            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
+
     # Reset player's health and status for each new battle
     player.health = 100
 
@@ -505,6 +652,48 @@ def main():
 
     # Select chosen arena
     chosen_arena = available_arenas[choice - 1]
+
+    if isinstance(chosen_arena, TheBattleArena):
+        player_choice = input("Choose 'weapon' or 'run': ").lower()
+        if player_choice == 'weapon':
+            player_weapon = choose_weapon(available_weapons)
+            player.weapon = player_weapon
+            print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+        else:
+            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
+    # Additional narrative and player choices here
+    elif isinstance(chosen_arena, TheForestArena):
+        player_choice = input("Choose 'weapon' or 'run': ").lower()
+        if player_choice == 'weapon':
+            player_weapon = choose_weapon(available_weapons)
+            player.weapon = player_weapon
+            print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+        else:
+            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
+    elif isinstance(chosen_arena, TheDesertArena):
+        player_choice = input("Choose 'weapon' or 'run': ").lower()
+        if player_choice == 'weapon':
+            player_weapon = choose_weapon(available_weapons)
+            player.weapon = player_weapon
+            print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+        else:
+            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
+    elif isinstance(chosen_arena, TheIceArena):
+        player_choice = input("Choose 'weapon' or 'run': ").lower()
+        if player_choice == 'weapon':
+            player_weapon = choose_weapon(available_weapons)
+            player.weapon = player_weapon
+            print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+        else:
+            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            return  # Exit the function to end the game
 
     # Reset player's health and status for each new battle
     player.health = 100
