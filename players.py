@@ -27,7 +27,7 @@ class Player(ABC):
         pass
 
 def rapid_assualt(player, target):
-    damage = 30
+    damage = 50
     print(f"""{player.name} unleashes a terriying Rapid Assault. 
           The player performs a rapid succession of strikes against 
           a single target or multiple nearby enemies, dealing 
@@ -36,7 +36,7 @@ def rapid_assualt(player, target):
     return damage
 
 def howl_of_despair(player, target):
-    damage = 30
+    damage = 50
     print(f"""{player.name} unleashes a terriying Howl of Despair. 
           The werewolf lets out a terrifying howl that can debuff 
           enemies within a certain radius, reducing their attack 
@@ -46,7 +46,7 @@ def howl_of_despair(player, target):
     return damage
 
 def bloodlust(player, target):
-    damage = 30
+    damage = 50
     print(f"""{player.name} unleashes a terriying Bloodlust. 
           With each hit that successfully damages an opponent, 
           the orc gains a small amount of health or a temporary 
@@ -56,7 +56,7 @@ def bloodlust(player, target):
     return damage
 
 def berserker_strike(player, target):
-    damage = 30
+    damage = 50
     print(f"""{player.name} unleashes a terriying Berserker Strike. 
           The ogre unleashes a series of powerful blows, each hit 
           dealing increased damage. This could involve swinging a 
@@ -66,7 +66,7 @@ def berserker_strike(player, target):
     return damage
 
 def dragons_breath(player, target):
-    damage = 30
+    damage = 50
     print(f"""{player.name} unleashes a terriying Dragon's Breath. 
           The dragon unleashes its ancient, elemental power in a 
           devastating breath attack that not only causes direct damage 
@@ -76,7 +76,7 @@ def dragons_breath(player, target):
     return damage
 
 def bone_shield(player, target):
-    damage = 30
+    damage = 50
     print(f"""{player.name} unleashes a terriying Bone Shield. 
           As the bones fly out, some of them circle back to form 
           a temporary shield around the skeleton, providing a defensive 
@@ -86,7 +86,7 @@ def bone_shield(player, target):
     return damage
 
 def plague_swarm(player, target):
-    damage = 30
+    damage = 50
     print(f"""{player.name} unleashes a terriying Plague Swarm. 
           The zombie unleashes a virulent, contagious plague that 
           not only damages but also has a chance to infect enemies, 
@@ -103,7 +103,7 @@ class Hero(Player):
     def special_attack(self, target):
         return self._special_attack(self, target)
 
-class Werewolf(Player):
+class FierceWerewolf(Player):
     def __init__(self, name, health, attack_power, special_attack_function, weapon=None):
         super().__init__(name, health, attack_power, weapon)
         self._special_attack = special_attack_function
@@ -111,7 +111,7 @@ class Werewolf(Player):
     def special_attack(self, target):
         return self._special_attack(self, target)
 
-class Orc(Player):
+class MightyOrc(Player):
     def __init__(self, name, health, attack_power, special_attack_function, weapon=None):
         super().__init__(name, health, attack_power, weapon)
         self._special_attack = special_attack_function
@@ -119,7 +119,7 @@ class Orc(Player):
     def special_attack(self, target):
         return self._special_attack(self, target)
 
-class Ogre(Player):
+class GiantOgre(Player):
     def __init__(self, name, health, attack_power, special_attack_function, weapon=None):
         super().__init__(name, health, attack_power, weapon)
         self._special_attack = special_attack_function
@@ -127,15 +127,7 @@ class Ogre(Player):
     def special_attack(self, target):
         return self._special_attack(self, target)
 
-class Dragon(Player):
-    def __init__(self, name, health, attack_power, special_attack_function, weapon=None):
-        super().__init__(name, health, attack_power, weapon)
-        self._special_attack = special_attack_function
-
-    def special_attack(self, target):
-        return self._special_attack(self, target)
-    
-class Skeleton(Player):
+class AncientDragon(Player):
     def __init__(self, name, health, attack_power, special_attack_function, weapon=None):
         super().__init__(name, health, attack_power, weapon)
         self._special_attack = special_attack_function
@@ -143,7 +135,15 @@ class Skeleton(Player):
     def special_attack(self, target):
         return self._special_attack(self, target)
     
-class Zombie(Player):
+class CreepySkeleton(Player):
+    def __init__(self, name, health, attack_power, special_attack_function, weapon=None):
+        super().__init__(name, health, attack_power, weapon)
+        self._special_attack = special_attack_function
+
+    def special_attack(self, target):
+        return self._special_attack(self, target)
+    
+class ScaryZombie(Player):
     def __init__(self, name, health, attack_power, special_attack_function, weapon=None):
         super().__init__(name, health, attack_power, weapon)
         self._special_attack = special_attack_function
