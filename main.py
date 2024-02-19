@@ -1,6 +1,6 @@
-from players import *
-from weapons import *
-from arenas import *
+from players import Player, Hero, FierceWerewolf, MightyOrc, GiantOgre, AncientDragon, CreepySkeleton, ScaryZombie, rapid_assualt, howl_of_despair, bloodlust, berserker_strike, dragons_breath, bone_shield, plague_swarm
+from weapons import Sword, Axe, Bow, Dagger, Mace
+from arenas import TheBattleArena, TheForestArena, TheDesertArena, TheIceArena
 import random
 
 def main():
@@ -224,7 +224,7 @@ def main():
     print(f"Total damage dealt to {player.name}: {player_damage_taken}")
     print(f"Total damage dealt to {opponent.name}: {opponent_damage_taken}")
 
-    # Present available arenas to choose
+# Present available arenas to choose
     print("Available Arenas:")
     for index, arena in enumerate(available_arenas, start=1):
         print(f"{index}. {arena.name}")
@@ -377,13 +377,6 @@ def main():
     print(f"Total damage dealt to {player.name}: {player_damage_taken}")
     print(f"Total damage dealt to {opponent.name}: {opponent_damage_taken}")
 
-    # Check if player won the battle
-    if player.is_alive():
-        print(f"Congratulations, {player.name}! You emerged victorious in {chosen_arena.name}.")
-    else:
-        print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
-        return  # Exit the function to end the game
-
     # Present available arenas to choose
     print("Available Arenas:")
     for index, arena in enumerate(available_arenas, start=1):
@@ -686,12 +679,6 @@ def main():
     print(f"Total damage dealt to {player.name}: {player_damage_taken}")
     print(f"Total damage dealt to {opponent.name}: {opponent_damage_taken}")
 
-    # Check if player won the battle
-    if player.is_alive():
-        print(f"Congratulations, {player.name}! You emerged victorious in {chosen_arena.name}.")
-    else:
-        print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
-        return  # Exit the function to end the game
     if victories == len(available_arenas):
         print(f"Amazing! {player.name} has emerged victorious in all arenas! A true champion of the realms!")
 
