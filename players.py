@@ -14,7 +14,7 @@ class Player(ABC):
         self.health -= damage
 
     def attack(self, target):
-        if self.weapon:
+        if self.weapon is not None:
             damage_dealt = self.attack_power + self.weapon.damage
         else:
             damage_dealt = self.attack_power
