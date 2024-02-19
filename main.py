@@ -1,6 +1,6 @@
-from players import Player, Hero, FierceWerewolf, MightyOrc, GiantOgre, AncientDragon, CreepySkeleton, ScaryZombie, rapid_assualt, howl_of_despair, bloodlust, berserker_strike, dragons_breath, bone_shield, plague_swarm
-from weapons import Sword, Axe, Bow, Dagger, Mace
-from arenas import TheBattleArena, TheForestArena, TheDesertArena, TheIceArena
+from players import *
+from weapons import *
+from arenas import *
 import random
 
 def main():
