@@ -86,6 +86,14 @@ def main():
     # Select chosen arena
     chosen_arena = available_arenas[choice - 1]
 
+    print(f"""As {player.name} cautiously enters the dark, eerily silent room of {chosen_arena.name}, 
+          a sense of foreboding fills the air. Suddenly, a faint noise catches your attention. You pause, 
+          listening intently. The sound grows slightly louder, resembling a distant clattering. You inch 
+          forward, your eyes scanning the dim surroundings. There, in the faint glow of light seeping 
+          through an unseen source, lies a weapon, its metal gleaming with a promise of power. A moment 
+          of decision arrives: Do you reach out to grasp the weapon, ready to face whatever lurks in the 
+          shadows, or do you let fear take over and attempt to flee this ominous place?""")
+
     if isinstance(chosen_arena, TheBattleArena):
         player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
         if player_choice == 1:
@@ -240,6 +248,14 @@ def main():
     # Select chosen arena
     chosen_arena = available_arenas[choice - 1]
 
+    print(f"""As {player.name} cautiously enters the dark, eerily silent room of {chosen_arena.name}, 
+          a sense of foreboding fills the air. Suddenly, a faint noise catches your attention. You pause, 
+          listening intently. The sound grows slightly louder, resembling a distant clattering. You inch 
+          forward, your eyes scanning the dim surroundings. There, in the faint glow of light seeping 
+          through an unseen source, lies a weapon, its metal gleaming with a promise of power. A moment 
+          of decision arrives: Do you reach out to grasp the weapon, ready to face whatever lurks in the 
+          shadows, or do you let fear take over and attempt to flee this ominous place?""")
+
     if isinstance(chosen_arena, TheBattleArena):
         player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
         if player_choice == 1:
@@ -393,6 +409,14 @@ def main():
     # Select chosen arena
     chosen_arena = available_arenas[choice - 1]
 
+    print(f"""As {player.name} cautiously enters the dark, eerily silent room of {chosen_arena.name}, 
+          a sense of foreboding fills the air. Suddenly, a faint noise catches your attention. You pause, 
+          listening intently. The sound grows slightly louder, resembling a distant clattering. You inch 
+          forward, your eyes scanning the dim surroundings. There, in the faint glow of light seeping 
+          through an unseen source, lies a weapon, its metal gleaming with a promise of power. A moment 
+          of decision arrives: Do you reach out to grasp the weapon, ready to face whatever lurks in the 
+          shadows, or do you let fear take over and attempt to flee this ominous place?""")
+
     if isinstance(chosen_arena, TheBattleArena):
         player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
         if player_choice == 1:
@@ -541,6 +565,14 @@ def main():
 
     # Select chosen arena
     chosen_arena = available_arenas[choice - 1]
+
+    print(f"""As {player.name} cautiously enters the dark, eerily silent room of {chosen_arena.name}, 
+          a sense of foreboding fills the air. Suddenly, a faint noise catches your attention. You pause, 
+          listening intently. The sound grows slightly louder, resembling a distant clattering. You inch 
+          forward, your eyes scanning the dim surroundings. There, in the faint glow of light seeping 
+          through an unseen source, lies a weapon, its metal gleaming with a promise of power. A moment 
+          of decision arrives: Do you reach out to grasp the weapon, ready to face whatever lurks in the 
+          shadows, or do you let fear take over and attempt to flee this ominous place?""")
 
     if isinstance(chosen_arena, TheBattleArena):
         player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
