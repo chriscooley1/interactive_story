@@ -3,14 +3,10 @@ from weapons import *
 from arenas import * 
 import random
 import time
- 
-def main():
 
-    player_choice = None  # Initialize to None or some default value
-    victories = 0
-    
-    # Define a list of available weapons with their name and damage
-    available_weapons = [
+# Define a list of available weapons with their name and damage
+def setup_weapons():
+    return [
         Sword("Sword", 30),
         Axe("Axe", 35),
         Bow("Bow", 25),
@@ -18,17 +14,61 @@ def main():
         Mace("Mace", 40)
     ]
 
-    # Add this function to allow the player to choose a weapon
-    def choose_weapon(available_weapons):
-        print("Available Weapons:")
-        for index, weapon in enumerate(available_weapons, start=1):
-            print(f"{index}. {weapon.name} (Damage: {weapon.damage})")
-        choice = int(input("Choose a weapon by entering its number: "))
-        if 1 <= choice <= len(available_weapons):
-            return available_weapons[choice - 1]
-        else:
-            print("Invalid choice. Defaulting to the first weapon.")
-            return available_weapons[0]
+# Add this function to allow the player to choose a weapon
+def choose_weapon(available_weapons):
+    print("Available Weapons:")
+    for index, weapon in enumerate(available_weapons, start=1):
+        print(f"{index}. {weapon.name} (Damage: {weapon.damage})")
+    choice = int(input("Choose a weapon by entering its number: "))
+    if 1 <= choice <= len(available_weapons):
+        return available_weapons[choice - 1]
+    else:
+        print("Invalid choice. Defaulting to the first weapon.")
+        return available_weapons[0]
+
+# Define a list of available arenas with their name and description
+def setup_arenas():
+    return [
+        TheBattleArena("The Battle Arena", "A gladiatorial arena where heroes and villains clash."),
+        TheForestArena("The Forest Arena", "A dense forest where fighters battle amidst trees and foliage."),
+        TheDesertArena("The Desert Arena", "A scorching desert where combatants face off under the blazing sun."),
+        TheIceArena("The Ice Arena", "A frozen wasteland where warriors duel on slippery ice.")
+    ]
+
+# Create available monsters with appropriate names
+def setup_monsters():
+    return [
+        FierceWerewolf("Fierce Werewolf", 175, 45, howl_of_despair),
+        MightyOrc("Mighty Orc", 160, 35, bloodlust),
+        GiantOgre("Giant Ogre", 185, 50, berserker_strike),
+        AncientDragon("Ancient Dragon", 200, 65, dragons_breath),
+        CreepySkeleton("Creepy Skeleton", 150, 30, bone_shield),
+        ScaryZombie("Scary Zombie", 155, 40, plague_swarm)
+    ]
+
+# Create a mapping of opponent classes to their special attacks
+def setup_special_attacks():
+    return {
+        FierceWerewolf: howl_of_despair,
+        MightyOrc: bloodlust,
+        GiantOgre: berserker_strike,
+        AncientDragon: dragons_breath,
+        CreepySkeleton: bone_shield,
+        ScaryZombie: plague_swarm
+    }
+
+def should_use_special_attack(player, opponent):
+    # Example condition: use special attack randomly
+    return random.choice([True, False])
+
+def main():
+
+    available_weapons = setup_weapons()
+    available_arenas = setup_arenas()
+    available_monsters = setup_monsters()
+    special_attacks_mapping = setup_special_attacks()
+    victories = 0
+    player_choice = None  # Initialize to None or some default value
 
     # Modify the player choice section in the main function
     if player_choice == 'weapon':
@@ -38,15 +78,6 @@ def main():
         for char in weapon_text:
             print(char, end='', flush=True)
             time.sleep(0.08)
-        #print(f"You pick up the {player_weapon.name}. Prepare for battle!")
-
-    # Define a list of available arenas with their name and description
-    available_arenas = [
-        TheBattleArena("The Battle Arena", "A gladiatorial arena where heroes and villains clash."),
-        TheForestArena("The Forest Arena", "A dense forest where fighters battle amidst trees and foliage."),
-        TheDesertArena("The Desert Arena", "A scorching desert where combatants face off under the blazing sun."),
-        TheIceArena("The Ice Arena", "A frozen wasteland where warriors duel on slippery ice.")
-    ]
 
     # Introduction
     print()
@@ -65,27 +96,7 @@ def main():
     for char in arrival_text:
         print(char, end='',flush=True)
         time.sleep(0.08)
-    #print(f"Our gladiator {player_name} arives!  They will now choose an evermost terrifying arena to combat in.")
     print()
-    # Create available monsters with appropriate names
-    available_monsters = [
-        FierceWerewolf("Fierce Werewolf", 175, 45, howl_of_despair),
-        MightyOrc("Mighty Orc", 160, 35, bloodlust),
-        GiantOgre("Giant Ogre", 185, 50, berserker_strike),
-        AncientDragon("Ancient Dragon", 200, 65, dragons_breath),
-        CreepySkeleton("Creepy Skeleton", 150, 30, bone_shield),
-        ScaryZombie("Scary Zombie", 155, 40, plague_swarm)
-    ]
-
-    # Create a mapping of opponent classes to their special attacks
-    special_attacks_mapping = {
-        FierceWerewolf: howl_of_despair,
-        MightyOrc: bloodlust,
-        GiantOgre: berserker_strike,
-        AncientDragon: dragons_breath,
-        CreepySkeleton: bone_shield,
-        ScaryZombie: plague_swarm
-    }
 
     # List of all opponent classes
     opponent_classes = list(special_attacks_mapping.keys())
@@ -112,7 +123,7 @@ def main():
     print()
 
     chosen_area_text = (f"""As {player.name} cautiously enters the dark, eerily silent room of {chosen_arena.name}, 
-         a sense of foreboding fills the air. Suddenly, a faint noise catches your attention. You pause, 
+          a sense of foreboding fills the air. Suddenly, a faint noise catches your attention. You pause, 
           listening intently. The sound grows slightly louder, resembling a distant clattering. You inch 
           forward, your eyes scanning the dim surroundings. There, in the faint glow of light seeping 
           through an unseen source, lies a weapon, its metal gleaming with a promise of power. A moment 
@@ -121,13 +132,6 @@ def main():
     for char in chosen_area_text:
         print(char, end='', flush=True)
         time.sleep(0.03)
-    #print(f"""As {player.name} cautiously enters the dark, eerily silent room of {chosen_arena.name}, 
-     #     a sense of foreboding fills the air. Suddenly, a faint noise catches your attention. You pause, 
-      #    listening intently. The sound grows slightly louder, resembling a distant clattering. You inch 
-       #   forward, your eyes scanning the dim surroundings. There, in the faint glow of light seeping 
-        #  through an unseen source, lies a weapon, its metal gleaming with a promise of power. A moment 
-         # of decision arrives: Do you reach out to grasp the weapon, ready to face whatever lurks in the 
-          #shadows, or do you let fear take over and attempt to flee this ominous place?""")
     print()
     if isinstance(chosen_arena, TheBattleArena):
         print()
@@ -140,20 +144,19 @@ def main():
             for char in weapon_text2:
                 print(char, end='', flush=True)
                 time.sleep(0.08)
-            #print(f"You pick up the {player_weapon.name}. Prepare for battle!")
         elif player_choice == 2:
             print()
-            panic_text = ("You panic and try to run away.  Unfortunately, you are cornered and defeated.")
+            panic_text = ("""In a sudden surge of panic, you attempt a desperate escape. But alas, your path is blocked, 
+            leaving you trapped and vulnerable. With no way out, you face an inevitable defeat, overwhelmed by 
+            the circumstances that have cunningly cornered you.""")
             for char in panic_text:
                 print(char,end='', flush=True)
                 time.sleep(0.08)
-            #print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
             print()
             defeat_text = (f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}.  Better luck next time!")
             for char in defeat_text:
                 print(char, end='', flush=True) 
                 time.sleep(0.08)
-            #print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             print()
             return  # Exit the function to end the game
         else:
@@ -170,7 +173,9 @@ def main():
             print()
         elif player_choice == 2:
             print()
-            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print("""In a sudden surge of panic, you attempt a desperate escape. But alas, your path is blocked, 
+            leaving you trapped and vulnerable. With no way out, you face an inevitable defeat, overwhelmed by 
+            the circumstances that have cunningly cornered you.""")
             print()
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             print()
@@ -187,7 +192,9 @@ def main():
             print()
         elif player_choice == 2:
             print()
-            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print("""In a sudden surge of panic, you attempt a desperate escape. But alas, your path is blocked, 
+            leaving you trapped and vulnerable. With no way out, you face an inevitable defeat, overwhelmed by 
+            the circumstances that have cunningly cornered you.""")
             print()
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             print()
@@ -208,7 +215,9 @@ def main():
             print()
         elif player_choice == 2:
             print()
-            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print("""In a sudden surge of panic, you attempt a desperate escape. But alas, your path is blocked, 
+            leaving you trapped and vulnerable. With no way out, you face an inevitable defeat, overwhelmed by 
+            the circumstances that have cunningly cornered you.""")
             print()
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             print()
@@ -240,40 +249,50 @@ def main():
     for char in welcome_text:
         print(char, end='', flush=True)
         time.sleep(0.03)
-    #print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
     print()
     equip_text = (f"You are equipped with a {player.weapon.name}.")
     for char in equip_text:
         print(char, end='', flush=True)
         time.sleep(0.08)
-    #print(f"You are equipped with a {player.weapon.name}.")
     print()
     opponent_text = (f"Your opponent is {opponent.name}, entering the {chosen_arena.name}.")
     for char in opponent_text:
         print(char, end='', flush=True)
         time.sleep(0.08)
-    #print(f"Your opponent is {opponent.name}, entering the {chosen_arena.name}.")
     print()
 
     # Simulate the interactive story based on the chosen arena
     if isinstance(chosen_arena, TheBattleArena):
-        battle_arena_text = ("As you enter the gladiatorial arena, the crowd roars with excitement.  The atmosphere is charged with tension.")
+        battle_arena_text = ("""As you step into the gladiatorial arena, a thunderous roar erupts from the sea of spectators, their 
+        excitement palpable in the electric air. The atmosphere is charged with a mix of anticipation and tension, almost tangible 
+        as the crowd's energy envelopes you. Each breath you take is heavy with the weight of expectation and the imminent challenge 
+        that lies ahead. The ground beneath you vibrates with the collective clamor of the audience, a testament to the grand 
+        spectacle that is about to unfold. You stand at the heart of the arena, ready to carve your fate in the sands of this 
+        ancient battleground.""")
         for char in battle_arena_text:
             print(char, end='', flush=True)
             time.sleep(0.08)
-        #print("As you enter the gladiatorial arena, the crowd roars with excitement. The atmosphere is charged with tension.")
         print()
         # Add more narrative specific to TheBattleArena
     elif isinstance(chosen_arena, TheForestArena):
-        print("You find yourself in a dense forest, surrounded by towering trees and mysterious sounds. The air is filled with the scent of nature.")
+        print("""You find yourself in the depths of a dense forest, surrounded by the imposing heights of towering trees reaching 
+        skyward. The atmosphere is thick with the rustling whispers of leaves and the enigmatic symphony of the forest's hidden 
+        dwellers. Echoes of distant bird calls and the soft crunch of underbrush under the feet of unseen creatures fill the air 
+        with a sense of mystery. The scent of the forest envelops you, a rich blend of damp earth, vibrant greenery, and the faint 
+        fragrance of wildflowers hidden in the shadows. Shafts of light filter through the dense canopy, creating a play of light 
+        and shadow that weaves a tapestry of intrigue and wonder, inviting you deeper into the forest's alluring mystery.""")
         print()
         # Add more narrative specific to TheForestArena
     elif isinstance(chosen_arena, TheDesertArena):
-        print("The scorching sun beats down on the endless expanse of the desert. The heat is almost unbearable, and the sand stretches as far as the eye can see.")
+        print("""The relentless sun blazes overhead in the vast desert, casting its scorching rays upon the endless sea of sand. 
+        The heat is oppressive, almost suffocating, as it envelopes everything under the wide, azure sky. As you gaze out, the 
+        sand forms an unbroken horizon, merging with the heat haze in the distance, creating an illusion of infinity.""")
         print()
         # Add more narrative specific to TheDesertArena
     elif isinstance(chosen_arena, TheIceArena):
-        print("You stand on a frozen wasteland, the icy ground beneath your feet. The air is bone-chilling, and the sound of cracking ice echoes in the distance.")
+        print("""You find yourself in the midst of a vast, frozen expanse, where the ground is a solid sheet of ice under your feet.
+        The air is piercingly cold, sending shivers down your spine. In the eerie silence of this frigid landscape, the occasional 
+        sound of ice fracturing and shifting resonates, echoing hauntingly in the distance.""")
         print()
         # Add more narrative specific to TheIceArena
 
@@ -283,10 +302,6 @@ def main():
     # Initialize damage counters
     player_damage_taken = 0
     opponent_damage_taken = 0
-
-    def should_use_special_attack(player, opponent):
-    # Example condition: use special attack randomly
-        return random.choice([True, False])
 
     # Simulate a battle
     while player.is_alive() and opponent.is_alive():
@@ -302,7 +317,6 @@ def main():
             for char in special_attack_text:
                 print(char,end='',flush=True)
                 time.sleep(0.08)
-            #print(f"{player.name} used a special attack on {opponent.name}, dealing {player_attack_damage} damage!")
             print()
         else:
             # Regular attack
@@ -348,7 +362,7 @@ def main():
     print(f"Total damage dealt to {opponent.name}: {opponent_damage_taken}")
     print()
 
-# Present available arenas to choose
+    # Present available arenas to choose
     print("You trudge forward completing the arena...")
     print()
     print("Available Arenas:")
@@ -381,7 +395,9 @@ def main():
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
         elif player_choice == 2:
-            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print("""In a sudden surge of panic, you attempt a desperate escape. But alas, your path is blocked, 
+            leaving you trapped and vulnerable. With no way out, you face an inevitable defeat, overwhelmed by 
+            the circumstances that have cunningly cornered you.""")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
         else:
@@ -394,7 +410,9 @@ def main():
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
         elif player_choice == 2:
-            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print("""In a sudden surge of panic, you attempt a desperate escape. But alas, your path is blocked, 
+            leaving you trapped and vulnerable. With no way out, you face an inevitable defeat, overwhelmed by 
+            the circumstances that have cunningly cornered you.""")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
         else:
@@ -407,7 +425,9 @@ def main():
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
         elif player_choice == 2:
             print()
-            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print("""In a sudden surge of panic, you attempt a desperate escape. But alas, your path is blocked, 
+            leaving you trapped and vulnerable. With no way out, you face an inevitable defeat, overwhelmed by 
+            the circumstances that have cunningly cornered you.""")
             print()
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             print()
@@ -421,7 +441,9 @@ def main():
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
         elif player_choice == 2:
-            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print("""In a sudden surge of panic, you attempt a desperate escape. But alas, your path is blocked, 
+            leaving you trapped and vulnerable. With no way out, you face an inevitable defeat, overwhelmed by 
+            the circumstances that have cunningly cornered you.""")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
         else:
@@ -450,16 +472,30 @@ def main():
 
     # Simulate the interactive story based on the chosen arena
     if isinstance(chosen_arena, TheBattleArena):
-        print("As you enter the gladiatorial arena, the crowd roars with excitement. The atmosphere is charged with tension.")
+        print("""As you step into the gladiatorial arena, a thunderous roar erupts from the sea of spectators, their 
+        excitement palpable in the electric air. The atmosphere is charged with a mix of anticipation and tension, almost tangible 
+        as the crowd's energy envelopes you. Each breath you take is heavy with the weight of expectation and the imminent challenge 
+        that lies ahead. The ground beneath you vibrates with the collective clamor of the audience, a testament to the grand 
+        spectacle that is about to unfold. You stand at the heart of the arena, ready to carve your fate in the sands of this 
+        ancient battleground.""")
         # Add more narrative specific to TheBattleArena
     elif isinstance(chosen_arena, TheForestArena):
-        print("You find yourself in a dense forest, surrounded by towering trees and mysterious sounds. The air is filled with the scent of nature.")
+        print("""You find yourself in the depths of a dense forest, surrounded by the imposing heights of towering trees reaching 
+        skyward. The atmosphere is thick with the rustling whispers of leaves and the enigmatic symphony of the forest's hidden 
+        dwellers. Echoes of distant bird calls and the soft crunch of underbrush under the feet of unseen creatures fill the air 
+        with a sense of mystery. The scent of the forest envelops you, a rich blend of damp earth, vibrant greenery, and the faint 
+        fragrance of wildflowers hidden in the shadows. Shafts of light filter through the dense canopy, creating a play of light 
+        and shadow that weaves a tapestry of intrigue and wonder, inviting you deeper into the forest's alluring mystery.""")
         # Add more narrative specific to TheForestArena
     elif isinstance(chosen_arena, TheDesertArena):
-        print("The scorching sun beats down on the endless expanse of the desert. The heat is almost unbearable, and the sand stretches as far as the eye can see.")
+        print("""The relentless sun blazes overhead in the vast desert, casting its scorching rays upon the endless sea of sand. 
+        The heat is oppressive, almost suffocating, as it envelopes everything under the wide, azure sky. As you gaze out, the 
+        sand forms an unbroken horizon, merging with the heat haze in the distance, creating an illusion of infinity.""")
         # Add more narrative specific to TheDesertArena
     elif isinstance(chosen_arena, TheIceArena):
-        print("You stand on a frozen wasteland, the icy ground beneath your feet. The air is bone-chilling, and the sound of cracking ice echoes in the distance.")
+        print("""You find yourself in the midst of a vast, frozen expanse, where the ground is a solid sheet of ice under your feet.
+        The air is piercingly cold, sending shivers down your spine. In the eerie silence of this frigid landscape, the occasional 
+        sound of ice fracturing and shifting resonates, echoing hauntingly in the distance.""")
         # Add more narrative specific to TheIceArena
 
     # Initialize winning_weapon outside the battle loop
@@ -468,10 +504,6 @@ def main():
     # Initialize damage counters
     player_damage_taken = 0
     opponent_damage_taken = 0
-
-    def should_use_special_attack(player, opponent):
-    # Example condition: use special attack randomly
-        return random.choice([True, False])
 
     # Simulate a battle
     while player.is_alive() and opponent.is_alive():
@@ -545,7 +577,9 @@ def main():
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
         elif player_choice == 2:
-            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print("""In a sudden surge of panic, you attempt a desperate escape. But alas, your path is blocked, 
+            leaving you trapped and vulnerable. With no way out, you face an inevitable defeat, overwhelmed by 
+            the circumstances that have cunningly cornered you.""")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
         else:
@@ -558,7 +592,9 @@ def main():
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
         elif player_choice == 2:
-            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print("""In a sudden surge of panic, you attempt a desperate escape. But alas, your path is blocked, 
+            leaving you trapped and vulnerable. With no way out, you face an inevitable defeat, overwhelmed by 
+            the circumstances that have cunningly cornered you.""")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
         else:
@@ -570,7 +606,9 @@ def main():
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
         elif player_choice == 2:
-            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print("""In a sudden surge of panic, you attempt a desperate escape. But alas, your path is blocked, 
+            leaving you trapped and vulnerable. With no way out, you face an inevitable defeat, overwhelmed by 
+            the circumstances that have cunningly cornered you.""")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
         else:
@@ -582,7 +620,9 @@ def main():
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
         elif player_choice == 2:
-            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print("""In a sudden surge of panic, you attempt a desperate escape. But alas, your path is blocked, 
+            leaving you trapped and vulnerable. With no way out, you face an inevitable defeat, overwhelmed by 
+            the circumstances that have cunningly cornered you.""")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
         else:
@@ -611,16 +651,30 @@ def main():
 
     # Simulate the interactive story based on the chosen arena
     if isinstance(chosen_arena, TheBattleArena):
-        print("As you enter the gladiatorial arena, the crowd roars with excitement. The atmosphere is charged with tension.")
+        print("""As you step into the gladiatorial arena, a thunderous roar erupts from the sea of spectators, their 
+        excitement palpable in the electric air. The atmosphere is charged with a mix of anticipation and tension, almost tangible 
+        as the crowd's energy envelopes you. Each breath you take is heavy with the weight of expectation and the imminent challenge 
+        that lies ahead. The ground beneath you vibrates with the collective clamor of the audience, a testament to the grand 
+        spectacle that is about to unfold. You stand at the heart of the arena, ready to carve your fate in the sands of this 
+        ancient battleground.""")
         # Add more narrative specific to TheBattleArena
     elif isinstance(chosen_arena, TheForestArena):
-        print("You find yourself in a dense forest, surrounded by towering trees and mysterious sounds. The air is filled with the scent of nature.")
+        print("""You find yourself in the depths of a dense forest, surrounded by the imposing heights of towering trees reaching 
+        skyward. The atmosphere is thick with the rustling whispers of leaves and the enigmatic symphony of the forest's hidden 
+        dwellers. Echoes of distant bird calls and the soft crunch of underbrush under the feet of unseen creatures fill the air 
+        with a sense of mystery. The scent of the forest envelops you, a rich blend of damp earth, vibrant greenery, and the faint 
+        fragrance of wildflowers hidden in the shadows. Shafts of light filter through the dense canopy, creating a play of light 
+        and shadow that weaves a tapestry of intrigue and wonder, inviting you deeper into the forest's alluring mystery.""")
         # Add more narrative specific to TheForestArena
     elif isinstance(chosen_arena, TheDesertArena):
-        print("The scorching sun beats down on the endless expanse of the desert. The heat is almost unbearable, and the sand stretches as far as the eye can see.")
+        print("""The relentless sun blazes overhead in the vast desert, casting its scorching rays upon the endless sea of sand. 
+        The heat is oppressive, almost suffocating, as it envelopes everything under the wide, azure sky. As you gaze out, the 
+        sand forms an unbroken horizon, merging with the heat haze in the distance, creating an illusion of infinity.""")
         # Add more narrative specific to TheDesertArena
     elif isinstance(chosen_arena, TheIceArena):
-        print("You stand on a frozen wasteland, the icy ground beneath your feet. The air is bone-chilling, and the sound of cracking ice echoes in the distance.")
+        print("""You find yourself in the midst of a vast, frozen expanse, where the ground is a solid sheet of ice under your feet.
+        The air is piercingly cold, sending shivers down your spine. In the eerie silence of this frigid landscape, the occasional 
+        sound of ice fracturing and shifting resonates, echoing hauntingly in the distance.""")
         # Add more narrative specific to TheIceArena
 
     # Initialize winning_weapon outside the battle loop
@@ -629,10 +683,6 @@ def main():
     # Initialize damage counters
     player_damage_taken = 0
     opponent_damage_taken = 0
-
-    def should_use_special_attack(player, opponent):
-    # Example condition: use special attack randomly
-        return random.choice([True, False])
 
     # Simulate a battle
     while player.is_alive() and opponent.is_alive():
@@ -702,7 +752,9 @@ def main():
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
         elif player_choice == 2:
-            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print("""In a sudden surge of panic, you attempt a desperate escape. But alas, your path is blocked, 
+            leaving you trapped and vulnerable. With no way out, you face an inevitable defeat, overwhelmed by 
+            the circumstances that have cunningly cornered you.""")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
         else:
@@ -715,7 +767,9 @@ def main():
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
         elif player_choice == 2:
-            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print("""In a sudden surge of panic, you attempt a desperate escape. But alas, your path is blocked, 
+            leaving you trapped and vulnerable. With no way out, you face an inevitable defeat, overwhelmed by 
+            the circumstances that have cunningly cornered you.""")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
         else:
@@ -727,7 +781,9 @@ def main():
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
         elif player_choice == 2:
-            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print("""In a sudden surge of panic, you attempt a desperate escape. But alas, your path is blocked, 
+            leaving you trapped and vulnerable. With no way out, you face an inevitable defeat, overwhelmed by 
+            the circumstances that have cunningly cornered you.""")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
         else:
@@ -739,7 +795,9 @@ def main():
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
         elif player_choice == 2:
-            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print("""In a sudden surge of panic, you attempt a desperate escape. But alas, your path is blocked, 
+            leaving you trapped and vulnerable. With no way out, you face an inevitable defeat, overwhelmed by 
+            the circumstances that have cunningly cornered you.""")
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
             return  # Exit the function to end the game
         else:
@@ -768,16 +826,30 @@ def main():
 
     # Simulate the interactive story based on the chosen arena
     if isinstance(chosen_arena, TheBattleArena):
-        print("As you enter the gladiatorial arena, the crowd roars with excitement. The atmosphere is charged with tension.")
+        print("""As you step into the gladiatorial arena, a thunderous roar erupts from the sea of spectators, their 
+        excitement palpable in the electric air. The atmosphere is charged with a mix of anticipation and tension, almost tangible 
+        as the crowd's energy envelopes you. Each breath you take is heavy with the weight of expectation and the imminent challenge 
+        that lies ahead. The ground beneath you vibrates with the collective clamor of the audience, a testament to the grand 
+        spectacle that is about to unfold. You stand at the heart of the arena, ready to carve your fate in the sands of this 
+        ancient battleground.""")
         # Add more narrative specific to TheBattleArena
     elif isinstance(chosen_arena, TheForestArena):
-        print("You find yourself in a dense forest, surrounded by towering trees and mysterious sounds. The air is filled with the scent of nature.")
+        print("""You find yourself in the depths of a dense forest, surrounded by the imposing heights of towering trees reaching 
+        skyward. The atmosphere is thick with the rustling whispers of leaves and the enigmatic symphony of the forest's hidden 
+        dwellers. Echoes of distant bird calls and the soft crunch of underbrush under the feet of unseen creatures fill the air 
+        with a sense of mystery. The scent of the forest envelops you, a rich blend of damp earth, vibrant greenery, and the faint 
+        fragrance of wildflowers hidden in the shadows. Shafts of light filter through the dense canopy, creating a play of light 
+        and shadow that weaves a tapestry of intrigue and wonder, inviting you deeper into the forest's alluring mystery.""")
         # Add more narrative specific to TheForestArena
     elif isinstance(chosen_arena, TheDesertArena):
-        print("The scorching sun beats down on the endless expanse of the desert. The heat is almost unbearable, and the sand stretches as far as the eye can see.")
+        print("""The relentless sun blazes overhead in the vast desert, casting its scorching rays upon the endless sea of sand. 
+        The heat is oppressive, almost suffocating, as it envelopes everything under the wide, azure sky. As you gaze out, the 
+        sand forms an unbroken horizon, merging with the heat haze in the distance, creating an illusion of infinity.""")
         # Add more narrative specific to TheDesertArena
     elif isinstance(chosen_arena, TheIceArena):
-        print("You stand on a frozen wasteland, the icy ground beneath your feet. The air is bone-chilling, and the sound of cracking ice echoes in the distance.")
+        print("""You find yourself in the midst of a vast, frozen expanse, where the ground is a solid sheet of ice under your feet.
+        The air is piercingly cold, sending shivers down your spine. In the eerie silence of this frigid landscape, the occasional 
+        sound of ice fracturing and shifting resonates, echoing hauntingly in the distance.""")
         # Add more narrative specific to TheIceArena
 
     # Initialize winning_weapon outside the battle loop
@@ -786,10 +858,6 @@ def main():
     # Initialize damage counters
     player_damage_taken = 0
     opponent_damage_taken = 0
-
-    def should_use_special_attack(player, opponent):
-    # Example condition: use special attack randomly
-        return random.choice([True, False])
 
     # Simulate a battle
     while player.is_alive() and opponent.is_alive():
@@ -834,11 +902,14 @@ def main():
 
     if victories == len(available_arenas):
 
-        victory_text = (f"Amazing! {player.name} has emerged victorious in all arenas! A true champion of the realms!")
+        victory_text = (f"""Behold the spectacular triumph! The invincible {player.name} has achieved a feat beyond imagination,
+        reigning victorious in every arena known to the realms. Their prowess and skill have marked them as the 
+        unparalleled Champion of the Realms, a title resonating with unmatched honor and strength. In the chronicles of 
+        time, their name will be revered as a symbol of ultimate mastery and heroic spirit. Across every land and kingdom, 
+        their extraordinary achievement is celebrated, heralding an era of awe inspired by their unmatched excellence!""")
         for char in victory_text:
             print(char,end='', flush=True)
             time.sleep(0.08)
-        #print(f"Amazing! {player.name} has emerged victorious in all arenas! A true champion of the realms!")
 
 if __name__ == "__main__":
     main()
