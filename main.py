@@ -1,8 +1,9 @@
 from players import *
 from weapons import *
-from arenas import *
+from arenas import * 
 import random
-
+import time
+ 
 def main():
 
     player_choice = None  # Initialize to None or some default value
@@ -33,7 +34,11 @@ def main():
     if player_choice == 'weapon':
         player_weapon = choose_weapon(available_weapons)
         player.weapon = player_weapon
-        print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+        weapon_text = (f"You pick up the {player_weapon.name}.  Prepare for battle!")
+        for char in weapon_text:
+            print(char, end='', flush=True)
+            time.sleep(0.08)
+        #print(f"You pick up the {player_weapon.name}. Prepare for battle!")
 
     # Define a list of available arenas with their name and description
     available_arenas = [
@@ -43,10 +48,25 @@ def main():
         TheIceArena("The Ice Arena", "A frozen wasteland where warriors duel on slippery ice.")
     ]
 
+    # Introduction
+    print()
+    title_text = ("Welcome to the Arena Battler!")
+    for char in title_text:
+        print(char,end='',flush=True)
+        time.sleep(0.04)
+    print()
+
     # Create players
+    time.sleep(0.5)
     player_name = input("Enter your character's name: ")
     player = Hero(player_name, 500, 45, rapid_assualt)
-
+    print()
+    arrival_text = (f"Our gladiator {player_name} arrives!  They will now choose an evermost terrifying arena to combat in.")
+    for char in arrival_text:
+        print(char, end='',flush=True)
+        time.sleep(0.08)
+    #print(f"Our gladiator {player_name} arives!  They will now choose an evermost terrifying arena to combat in.")
+    print()
     # Create available monsters with appropriate names
     available_monsters = [
         FierceWerewolf("Fierce Werewolf", 175, 45, howl_of_despair),
@@ -71,13 +91,17 @@ def main():
     opponent_classes = list(special_attacks_mapping.keys())
 
     # Present available arenas to choose
-    print("Available Arenas:")
+    available_arenas_text = ("Available Arenas:")
+    for char in available_arenas_text:
+        print(char, end='',flush=True)
+        time.sleep(0.05)
+    #print("Available Arenas:")
     for index, arena in enumerate(available_arenas, start=1):
         print(f"{index}. {arena.name}")
-
+    print()
     # Get the Hero's choice
     choice = int(input("Choose an arena by entering its number: "))
-
+    print()
     # Check if choice is valid
     if choice < 1 or choice > len(available_arenas):
         print("Invalid choice. Please choose a valid arena.")
@@ -85,24 +109,52 @@ def main():
 
     # Select chosen arena
     chosen_arena = available_arenas[choice - 1]
+    print()
 
-    print(f"""As {player.name} cautiously enters the dark, eerily silent room of {chosen_arena.name}, 
-          a sense of foreboding fills the air. Suddenly, a faint noise catches your attention. You pause, 
+    chosen_area_text = (f"""As {player.name} cautiously enters the dark, eerily silent room of {chosen_arena.name}, 
+         a sense of foreboding fills the air. Suddenly, a faint noise catches your attention. You pause, 
           listening intently. The sound grows slightly louder, resembling a distant clattering. You inch 
           forward, your eyes scanning the dim surroundings. There, in the faint glow of light seeping 
           through an unseen source, lies a weapon, its metal gleaming with a promise of power. A moment 
           of decision arrives: Do you reach out to grasp the weapon, ready to face whatever lurks in the 
-          shadows, or do you let fear take over and attempt to flee this ominous place?""")
-
+          shadows, or do you let fear take over and attempt to flee this ominous place?""") 
+    for char in chosen_area_text:
+        print(char, end='', flush=True)
+        time.sleep(0.03)
+    #print(f"""As {player.name} cautiously enters the dark, eerily silent room of {chosen_arena.name}, 
+     #     a sense of foreboding fills the air. Suddenly, a faint noise catches your attention. You pause, 
+      #    listening intently. The sound grows slightly louder, resembling a distant clattering. You inch 
+       #   forward, your eyes scanning the dim surroundings. There, in the faint glow of light seeping 
+        #  through an unseen source, lies a weapon, its metal gleaming with a promise of power. A moment 
+         # of decision arrives: Do you reach out to grasp the weapon, ready to face whatever lurks in the 
+          #shadows, or do you let fear take over and attempt to flee this ominous place?""")
+    print()
     if isinstance(chosen_arena, TheBattleArena):
+        print()
         player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
+        print()
         if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
-            print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+            weapon_text2 = (f"You pick up the {player_weapon.name}.  Prepare for battle!")
+            for char in weapon_text2:
+                print(char, end='', flush=True)
+                time.sleep(0.08)
+            #print(f"You pick up the {player_weapon.name}. Prepare for battle!")
         elif player_choice == 2:
-            print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
-            print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            print()
+            panic_text = ("You panic and try to run away.  Unfortunately, you are cornered and defeated.")
+            for char in panic_text:
+                print(char,end='', flush=True)
+                time.sleep(0.08)
+            #print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print()
+            defeat_text = (f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}.  Better luck next time!")
+            for char in defeat_text:
+                print(char, end='', flush=True) 
+                time.sleep(0.08)
+            #print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            print()
             return  # Exit the function to end the game
         else:
             print("Invalid choice. Please choose a valid option.")
@@ -113,10 +165,15 @@ def main():
         if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
+            print()
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+            print()
         elif player_choice == 2:
+            print()
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print()
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            print()
             return  # Exit the function to end the game
         else:
             print("Invalid choice. Please choose a valid option.")
@@ -125,25 +182,41 @@ def main():
         if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
+            print()
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+            print()
         elif player_choice == 2:
+            print()
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print()
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            print()
             return  # Exit the function to end the game
         else:
+            print()
             print("Invalid choice. Please choose a valid option.")
+            print()
     elif isinstance(chosen_arena, TheIceArena):
+        print()
         player_choice = int(input("Choose an option: 1 for weapon, 2 to run: "))
+        print()
         if player_choice == 1:
             player_weapon = choose_weapon(available_weapons)
             player.weapon = player_weapon
+            print()
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
+            print()
         elif player_choice == 2:
+            print()
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print()
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            print()
             return  # Exit the function to end the game
         else:
+            print()
             print("Invalid choice. Please choose a valid option.")
+            print()
 
     # Reset player's health and status for each new battle
     player.health = 100
@@ -162,22 +235,46 @@ def main():
     chosen_arena.add_player(opponent)
 
     # Announcement of the arena, weapon, and opponent
-    print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
-    print(f"You are equipped with a {player.weapon.name}.")
-    print(f"Your opponent is {opponent.name}, entering the {chosen_arena.name}.")
+    print()
+    welcome_text = (f"Welcome, {player.name}!  You are in {chosen_arena.name}: {chosen_arena.description}")
+    for char in welcome_text:
+        print(char, end='', flush=True)
+        time.sleep(0.03)
+    #print(f"Welcome, {player.name}! You are in {chosen_arena.name}: {chosen_arena.description}")
+    print()
+    equip_text = (f"You are equipped with a {player.weapon.name}.")
+    for char in equip_text:
+        print(char, end='', flush=True)
+        time.sleep(0.08)
+    #print(f"You are equipped with a {player.weapon.name}.")
+    print()
+    opponent_text = (f"Your opponent is {opponent.name}, entering the {chosen_arena.name}.")
+    for char in opponent_text:
+        print(char, end='', flush=True)
+        time.sleep(0.08)
+    #print(f"Your opponent is {opponent.name}, entering the {chosen_arena.name}.")
+    print()
 
     # Simulate the interactive story based on the chosen arena
     if isinstance(chosen_arena, TheBattleArena):
-        print("As you enter the gladiatorial arena, the crowd roars with excitement. The atmosphere is charged with tension.")
+        battle_arena_text = ("As you enter the gladiatorial arena, the crowd roars with excitement.  The atmosphere is charged with tension.")
+        for char in battle_arena_text:
+            print(char, end='', flush=True)
+            time.sleep(0.08)
+        #print("As you enter the gladiatorial arena, the crowd roars with excitement. The atmosphere is charged with tension.")
+        print()
         # Add more narrative specific to TheBattleArena
     elif isinstance(chosen_arena, TheForestArena):
         print("You find yourself in a dense forest, surrounded by towering trees and mysterious sounds. The air is filled with the scent of nature.")
+        print()
         # Add more narrative specific to TheForestArena
     elif isinstance(chosen_arena, TheDesertArena):
         print("The scorching sun beats down on the endless expanse of the desert. The heat is almost unbearable, and the sand stretches as far as the eye can see.")
+        print()
         # Add more narrative specific to TheDesertArena
     elif isinstance(chosen_arena, TheIceArena):
         print("You stand on a frozen wasteland, the icy ground beneath your feet. The air is bone-chilling, and the sound of cracking ice echoes in the distance.")
+        print()
         # Add more narrative specific to TheIceArena
 
     # Initialize winning_weapon outside the battle loop
@@ -200,20 +297,32 @@ def main():
         # Player's turn
         if should_use_special_attack(player, opponent):
             player_attack_damage = player.special_attack(opponent)
-            print(f"{player.name} used a special attack on {opponent.name}, dealing {player_attack_damage} damage!")
+            print()
+            special_attack_text = (f"{player.name} used a special attack on {opponent.name}, dealing {player_attack_damage} damage!")
+            for char in special_attack_text:
+                print(char,end='',flush=True)
+                time.sleep(0.08)
+            #print(f"{player.name} used a special attack on {opponent.name}, dealing {player_attack_damage} damage!")
+            print()
         else:
             # Regular attack
             player_attack_damage = player.attack(opponent)
+            print()
             print(f"{player.name} attacked {opponent.name}, dealing {player_attack_damage} damage!")
+            print()
 
         # Opponent's turn
         if opponent.is_alive():
             if should_use_special_attack(opponent, player):
                 opponent_attack_damage = opponent.special_attack(player)
+                print()
                 print(f"{opponent.name} used a special attack on {player.name}, dealing {opponent_attack_damage} damage!")
+                print()
             else:
                 opponent_attack_damage = opponent.attack(player)
+                print()
                 print(f"{opponent.name} attacked {player.name}, dealing {opponent_attack_damage} damage!")
+                print()
 
         # Track damage taken by both player and opponent
         player_damage_taken += opponent_attack_damage
@@ -222,17 +331,26 @@ def main():
         # Check the outcome of the battle
         if not opponent.is_alive():
             winning_weapon = player.weapon.name
+            print()
             print(f"Congratulations, {player.name}! You emerged victorious with {winning_weapon}.")
+            print()
             victories += 1
         elif not player.is_alive():
+            print()
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            print()
             return  # Exit the function to end the game
 
     # Display damage information
+    print()
     print(f"Total damage dealt to {player.name}: {player_damage_taken}")
+    print()
     print(f"Total damage dealt to {opponent.name}: {opponent_damage_taken}")
+    print()
 
 # Present available arenas to choose
+    print("You trudge forward completing the arena...")
+    print()
     print("Available Arenas:")
     for index, arena in enumerate(available_arenas, start=1):
         print(f"{index}. {arena.name}")
@@ -288,8 +406,11 @@ def main():
             player.weapon = player_weapon
             print(f"You pick up the {player_weapon.name}. Prepare for battle!")
         elif player_choice == 2:
+            print()
             print("You panic and try to run away. Unfortunately, you are cornered and defeated.")
+            print()
             print(f"Unfortunately, {player.name} has been defeated in {chosen_arena.name}. Better luck next time!")
+            print()
             return  # Exit the function to end the game
         else:
             print("Invalid choice. Please choose a valid option.")
@@ -712,7 +833,12 @@ def main():
     print(f"Total damage dealt to {opponent.name}: {opponent_damage_taken}")
 
     if victories == len(available_arenas):
-        print(f"Amazing! {player.name} has emerged victorious in all arenas! A true champion of the realms!")
+
+        victory_text = (f"Amazing! {player.name} has emerged victorious in all arenas! A true champion of the realms!")
+        for char in victory_text:
+            print(char,end='', flush=True)
+            time.sleep(0.08)
+        #print(f"Amazing! {player.name} has emerged victorious in all arenas! A true champion of the realms!")
 
 if __name__ == "__main__":
     main()
